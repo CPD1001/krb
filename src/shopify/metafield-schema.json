@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Keizers Configurator Metafield Schema",
+  "description": "Defines all metafields needed for the product configurator on Shopify.",
+  "metafields": [
+    {
+      "namespace": "configurator",
+      "key": "power_systems",
+      "type": "json",
+      "description": "Available power system options (battery packs, fuel types)",
+      "example": [
+        {
+          "id": "battery-4x",
+          "title": "4x Accu Systeem",
+          "type": "battery",
+          "batteryCount": 4,
+          "runtime": "~6 uur",
+          "price": 49900,
+          "image": "https://cdn.shopify.com/...",
+          "badge": "recommended",
+          "description": "Extended battery system for professional use"
+        }
+      ]
+    },
+    {
+      "namespace": "configurator",
+      "key": "deck_options",
+      "type": "json",
+      "description": "Available deck/cutting system options",
+      "example": [
+        {
+          "id": "deck-122",
+          "title": "122 cm Maaibord",
+          "size": 122,
+          "cuttingWidth": "122 cm",
+          "price": 34900,
+          "badge": "popular"
+        }
+      ]
+    },
+    {
+      "namespace": "configurator",
+      "key": "accessories",
+      "type": "json",
+      "description": "Available accessories for the machine",
+      "example": [
+        {
+          "id": "mulch-kit-122",
+          "title": "Mulch Kit 122 cm",
+          "category": "cutting",
+          "price": 29900,
+          "badge": "popular",
+          "incompatibleWith": ["deck-137"]
+        }
+      ]
+    },
+    {
+      "namespace": "configurator",
+      "key": "pro_upgrades",
+      "type": "json",
+      "description": "Professional upgrade options (GPS, fleet management, etc.)"
+    },
+    {
+      "namespace": "configurator",
+      "key": "service_options",
+      "type": "json",
+      "description": "Service packages (warranty, installation, training)"
+    },
+    {
+      "namespace": "configurator",
+      "key": "compatibility_rules",
+      "type": "json",
+      "description": "Rules that control which options are shown, hidden, required, or disabled based on selections",
+      "example": [
+        {
+          "if": { "optionId": "snow-blade" },
+          "then": {
+            "require": ["counterweight-kit"],
+            "recommend": ["led-lights"]
+          }
+        }
+      ]
+    },
+    {
+      "namespace": "configurator",
+      "key": "bundle_rules",
+      "type": "json",
+      "description": "Bundle discount rules. When all optionIds are selected, discount is applied.",
+      "example": [
+        {
+          "id": "pro-tech-bundle",
+          "optionIds": ["gps-module", "fleet-mgmt", "remote-control"],
+          "discount": 24000,
+          "label": "Pro Tech Bundel",
+          "description": "Bespaar €240 op het complete technologiepakket"
+        }
+      ]
+    },
+    {
+      "namespace": "configurator",
+      "key": "images",
+      "type": "json",
+      "description": "Mapping of configuration states to product images",
+      "example": {
+        "default": "https://cdn.shopify.com/.../default.webp",
+        "deck-122+battery-4x": "https://cdn.shopify.com/.../config-1.webp"
+      }
+    },
+    {
+      "namespace": "configurator",
+      "key": "default_config",
+      "type": "json",
+      "description": "Default/recommended configuration selections"
+    },
+    {
+      "namespace": "configurator",
+      "key": "variant_map",
+      "type": "json",
+      "description": "Mapping from option IDs to Shopify variant IDs for cart integration",
+      "example": {
+        "automower-550-epos": 12345678901,
+        "battery-4x": 12345678902,
+        "mulch-kit-122": 12345678903
+      }
+    }
+  ],
+  "shopify_admin_setup": {
+    "steps": [
+      "1. Go to Shopify Admin > Settings > Custom data > Products",
+      "2. Add metafield definitions for each entry above",
+      "3. Set namespace to 'configurator' and key as listed",
+      "4. Set type to 'JSON' for all fields",
+      "5. On each configurable product, populate the metafields with option data",
+      "6. Create separate products for each accessory/upgrade (for independent cart items)",
+      "7. Map option IDs to variant IDs in the variant_map metafield",
+      "8. Assign the 'product-configurator' template to configurable products"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git init)",
+      "Bash(gh auth status)",
+      "Bash(git add .gitignore .claude/ CONFIGURATOR-SPEC.md index.html package.json package-lock.json tsconfig.json vite.config.ts src/)"
+    ]
+  }
+}

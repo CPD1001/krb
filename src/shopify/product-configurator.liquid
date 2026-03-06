@@ -1,0 +1,119 @@
+{% comment %}
+  ╔═══════════════════════════════════════════════════════════════╗
+  ║  KEIZERS MACHINE CONFIGURATOR — Shopify Liquid Template      ║
+  ║                                                               ║
+  ║  Usage: Assign this template to configurable products.        ║
+  ║  The configurator data is stored in product metafields        ║
+  ║  under the 'configurator' namespace.                          ║
+  ╚═══════════════════════════════════════════════════════════════╝
+{% endcomment %}
+
+{% comment %} Check if this product has configurator data {% endcomment %}
+{% assign has_configurator = false %}
+{% if product.metafields.configurator.power_systems != blank %}
+  {% assign has_configurator = true %}
+{% endif %}
+
+{% if has_configurator %}
+
+  {%- comment -%} Preload critical fonts {%- endcomment -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  {%- comment -%} Configurator container with product data {%- endcomment -%}
+  <div id="keizers-configurator"
+    data-product-id="{{ product.id }}"
+    data-product-handle="{{ product.handle }}"
+    data-product-title="{{ product.title | escape }}"
+    data-base-price="{{ product.price }}"
+    data-base-variant-id="{{ product.selected_or_first_available_variant.id }}"
+    data-currency="{{ cart.currency.iso_code }}"
+    data-power-systems='{{ product.metafields.configurator.power_systems | json }}'
+    data-deck-options='{{ product.metafields.configurator.deck_options | json }}'
+    data-accessories='{{ product.metafields.configurator.accessories | json }}'
+    data-pro-upgrades='{{ product.metafields.configurator.pro_upgrades | json }}'
+    data-services='{{ product.metafields.configurator.service_options | json }}'
+    data-compatibility='{{ product.metafields.configurator.compatibility_rules | json }}'
+    data-bundles='{{ product.metafields.configurator.bundle_rules | json }}'
+    data-images='{{ product.metafields.configurator.images | json }}'
+    data-default-config='{{ product.metafields.configurator.default_config | json }}'
+    data-variant-map='{{ product.metafields.configurator.variant_map | json }}'>
+
+    {%- comment -%} Loading state (shown before JS loads) {%- endcomment -%}
+    <div class="cfg-loading" style="
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      background: #0a0a0a;
+      color: #999;
+      font-family: 'Inter', sans-serif;
+    ">
+      <div style="text-align: center;">
+        <div style="
+          width: 40px; height: 40px;
+          border: 2px solid #2a2a2a;
+          border-top-color: #4a90d9;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+          margin: 0 auto 16px;
+        "></div>
+        <p>Configurator laden...</p>
+        <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Load configurator JS (defer for performance) {%- endcomment -%}
+  {{ 'configurator.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'configurator.js' | asset_url }}" defer></script>
+
+  {%- comment -%}
+    Initialize configurator after DOM ready.
+    The JS bundle reads data attributes from the container.
+  {%- endcomment -%}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var container = document.getElementById('keizers-configurator');
+      if (container && window.KeizerConfigurator) {
+        window.KeizerConfigurator.init(container);
+      }
+    });
+  </script>
+
+{% else %}
+
+  {%- comment -%} Fallback: Standard product template {%- endcomment -%}
+  <div class="product-standard">
+    <div class="product-standard__media">
+      {% for image in product.images %}
+        <img
+          src="{{ image | image_url: width: 800 }}"
+          alt="{{ image.alt | escape }}"
+          loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+          width="{{ image.width }}"
+          height="{{ image.height }}"
+        />
+      {% endfor %}
+    </div>
+
+    <div class="product-standard__info">
+      <h1>{{ product.title }}</h1>
+      <p class="product-standard__price">{{ product.price | money }}</p>
+      <div class="product-standard__description">{{ product.description }}</div>
+
+      {% form 'product', product %}
+        <select name="id">
+          {% for variant in product.variants %}
+            <option value="{{ variant.id }}" {% unless variant.available %}disabled{% endunless %}>
+              {{ variant.title }} — {{ variant.price | money }}
+            </option>
+          {% endfor %}
+        </select>
+        <button type="submit">In winkelwagen</button>
+      {% endform %}
+    </div>
+  </div>
+
+{% endif %}
