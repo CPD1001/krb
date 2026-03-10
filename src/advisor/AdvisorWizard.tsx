@@ -6,6 +6,11 @@ import {
 } from './advisor-engine';
 import { husqvarnaCatalog } from '../configurator/data/husqvarna-catalog';
 import { formatPrice } from '../configurator/engine/pricing';
+import {
+  IconGardenXS, IconGardenSM, IconGardenMD, IconGardenLG, IconGardenXL,
+  IconSlopeFlat, IconSlopeMild, IconSlopeModerate, IconSlopeSteep,
+  IconWifi, IconBluetooth, IconHedgehog, IconLeaf,
+} from './icons';
 import './advisor.css';
 
 type Step = 'area' | 'slope' | 'smart' | 'wildlife' | 'result';
@@ -123,8 +128,8 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
                 Met WiFi + 4G bedient u uw maaier via de Automower Connect-app. Maaiplan instellen, locatie volgen en meldingen ontvangen.
               </p>
               <div className="adv-cards adv-cards--2col">
-                <AdvCard label="Ja, met app" sub="WiFi + 4G bediening" icon="📱" onClick={() => selectSmart(true)} />
-                <AdvCard label="Nee, eenvoudig" sub="Bluetooth volstaat" icon="🔵" onClick={() => selectSmart(false)} />
+                <AdvCard label="Ja, met app" sub="WiFi + 4G bediening" icon={<IconWifi />} onClick={() => selectSmart(true)} />
+                <AdvCard label="Nee, eenvoudig" sub="Bluetooth volstaat" icon={<IconBluetooth />} onClick={() => selectSmart(false)} />
               </div>
               <BackBtn onClick={() => setStep('slope')} />
             </AdvisorStep>
@@ -136,8 +141,8 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
                 AI wildlife-detectie stopt de maaier automatisch als er een egel, kat of ander dier in de buurt is.
               </p>
               <div className="adv-cards adv-cards--2col">
-                <AdvCard label="Ja, dierdetectie" sub="AI-camera aan boord" icon="🦔" onClick={() => selectWildlife(true)} />
-                <AdvCard label="Nee, niet nodig" sub="Standaard beveiliging" icon="🌿" onClick={() => selectWildlife(false)} />
+                <AdvCard label="Ja, dierdetectie" sub="AI-camera aan boord" icon={<IconHedgehog />} onClick={() => selectWildlife(true)} />
+                <AdvCard label="Nee, niet nodig" sub="Standaard beveiliging" icon={<IconLeaf />} onClick={() => selectWildlife(false)} />
               </div>
               <BackBtn onClick={() => setStep('smart')} />
             </AdvisorStep>
@@ -232,7 +237,7 @@ function AdvisorStep({ title, sub, children }: { title: string; sub: string; chi
 
 function AdvCard({
   label, sub, icon, onClick,
-}: { label: string; sub: string; icon?: string; onClick: () => void }) {
+}: { label: string; sub: string; icon?: React.ReactNode; onClick: () => void }) {
   return (
     <button className="adv-card" onClick={onClick}>
       {icon && <span className="adv-card__icon">{icon}</span>}
@@ -250,17 +255,17 @@ function BackBtn({ onClick }: { onClick: () => void }) {
 
 // ─── Static option data ───────────────────────────────────────────
 
-const AREA_OPTIONS = [
-  { id: 'xs', label: 'Klein',     sub: 'tot 500 m²' },
-  { id: 'sm', label: 'Middel',    sub: '500 – 1.000 m²' },
-  { id: 'md', label: 'Groot',     sub: '1.000 – 2.200 m²' },
-  { id: 'lg', label: 'Heel groot', sub: '2.200 – 5.000 m²' },
-  { id: 'xl', label: 'Zeer groot', sub: '> 5.000 m²' },
+const AREA_OPTIONS: { id: AreaBucket; label: string; sub: string; icon: React.ReactNode }[] = [
+  { id: 'xs', label: 'Klein',      sub: 'tot 500 m²',          icon: <IconGardenXS /> },
+  { id: 'sm', label: 'Middel',     sub: '500 – 1.000 m²',      icon: <IconGardenSM /> },
+  { id: 'md', label: 'Groot',      sub: '1.000 – 2.200 m²',    icon: <IconGardenMD /> },
+  { id: 'lg', label: 'Heel groot', sub: '2.200 – 5.000 m²',    icon: <IconGardenLG /> },
+  { id: 'xl', label: 'Zeer groot', sub: '> 5.000 m²',          icon: <IconGardenXL /> },
 ];
 
-const SLOPE_OPTIONS = [
-  { id: 'flat',     label: 'Vlak',         sub: 'Nauwelijks helling',     icon: '🟢' },
-  { id: 'mild',     label: 'Licht hellend', sub: '30 – 40% helling',      icon: '🟡' },
-  { id: 'moderate', label: 'Matig hellend', sub: '40 – 50% helling',      icon: '🟠' },
-  { id: 'steep',    label: 'Sterk hellend', sub: 'Meer dan 50% helling',  icon: '🔴' },
+const SLOPE_OPTIONS: { id: SlopeBucket; label: string; sub: string; icon: React.ReactNode }[] = [
+  { id: 'flat',     label: 'Vlak',          sub: 'Nauwelijks helling',    icon: <IconSlopeFlat /> },
+  { id: 'mild',     label: 'Licht hellend', sub: '30 – 40% helling',      icon: <IconSlopeMild /> },
+  { id: 'moderate', label: 'Matig hellend', sub: '40 – 50% helling',      icon: <IconSlopeModerate /> },
+  { id: 'steep',    label: 'Sterk hellend', sub: 'Meer dan 50% helling',  icon: <IconSlopeSteep /> },
 ];
