@@ -62,8 +62,9 @@ export interface UpgradeOption extends ConfigOption {
 }
 
 export interface ServiceOption extends ConfigOption {
-  category: 'warranty' | 'delivery' | 'installation' | 'training' | 'maintenance';
+  category: 'warranty' | 'delivery' | 'installation' | 'training' | 'maintenance' | 'lease' | 'service-contract';
   duration?: string;
+  billing?: 'monthly' | 'once';
 }
 
 // ─── Machine Configuration State ─────────────────────────────────

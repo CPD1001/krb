@@ -12,10 +12,10 @@ import type {
   AccessoryOption,
   UpgradeOption,
   ServiceOption,
-  STEP_ORDER,
 } from './types/configurator';
 import { calculatePrice } from './engine/pricing';
 import { resolveCompatibility } from './engine/compatibility';
+import { getActiveSteps } from './utils/get-active-steps';
 
 // ─── Initial State ───────────────────────────────────────────────
 
@@ -38,44 +38,47 @@ const initialState: ConfiguratorState = {
   requiredOptions: new Set(),
 };
 
-// ─── Step Order ──────────────────────────────────────────────────
-
-const STEPS: ConfigStep[] = ['machine', 'power', 'core', 'accessories', 'upgrades', 'service', 'summary'];
-
 // ─── Reducer ─────────────────────────────────────────────────────
 
 function configuratorReducer(state: ConfiguratorState, action: ConfiguratorAction): ConfiguratorState {
   switch (action.type) {
-    case 'SET_PRODUCT_DATA':
+    case 'SET_PRODUCT_DATA': {
+      const dc = action.payload.defaultConfig ?? {};
       return {
         ...state,
         productData: action.payload,
         isLoading: false,
+        // Auto-advance past 'machine' step if only one machine and it's pre-selected
+        currentStep: action.payload.machines.length === 1
+          ? getActiveSteps(action.payload)[1] ?? 'summary'
+          : 'machine',
         config: {
           ...initialConfig,
-          machine: action.payload.defaultConfig?.machine ?? null,
-          powerSystem: action.payload.defaultConfig?.powerSystem ?? null,
-          deckSize: action.payload.defaultConfig?.deckSize ?? null,
+          machine:      dc.machine      ?? (action.payload.machines.length === 1 ? action.payload.machines[0] : null),
+          powerSystem:  dc.powerSystem  ?? null,
+          deckSize:     dc.deckSize     ?? null,
+          accessories:  dc.accessories  ?? [],
+          proUpgrades:  dc.proUpgrades  ?? [],
+          services:     dc.services     ?? [],
         },
       };
+    }
 
     case 'SET_STEP':
       return { ...state, currentStep: action.payload };
 
     case 'NEXT_STEP': {
-      const idx = STEPS.indexOf(state.currentStep);
-      if (idx < STEPS.length - 1) {
-        return { ...state, currentStep: STEPS[idx + 1] };
-      }
-      return state;
+      const active = getActiveSteps(state.productData);
+      const idx = active.indexOf(state.currentStep);
+      const next = active[idx + 1];
+      return next ? { ...state, currentStep: next } : state;
     }
 
     case 'PREV_STEP': {
-      const idx = STEPS.indexOf(state.currentStep);
-      if (idx > 0) {
-        return { ...state, currentStep: STEPS[idx - 1] };
-      }
-      return state;
+      const active = getActiveSteps(state.productData);
+      const idx = active.indexOf(state.currentStep);
+      const prev = active[idx - 1];
+      return prev ? { ...state, currentStep: prev } : state;
     }
 
     case 'SELECT_MACHINE':
@@ -115,13 +118,26 @@ function configuratorReducer(state: ConfiguratorState, action: ConfiguratorActio
 
     case 'TOGGLE_SERVICE': {
       const exists = state.config.services.some(s => s.id === action.payload.id);
+      if (exists) {
+        // De-select
+        return {
+          ...state,
+          config: {
+            ...state.config,
+            services: state.config.services.filter(s => s.id !== action.payload.id),
+          },
+        };
+      }
+      // Select: also remove incompatible services
+      const incompatible = new Set(action.payload.incompatibleWith ?? []);
       return {
         ...state,
         config: {
           ...state.config,
-          services: exists
-            ? state.config.services.filter(s => s.id !== action.payload.id)
-            : [...state.config.services, action.payload],
+          services: [
+            ...state.config.services.filter(s => !incompatible.has(s.id)),
+            action.payload,
+          ],
         },
       };
     }
@@ -146,6 +162,7 @@ interface ConfiguratorContextValue {
     requiredOptions: Set<string>;
     hiddenOptions: Set<string>;
   };
+  activeSteps: ConfigStep[];
   currentStepIndex: number;
   totalSteps: number;
   canGoNext: boolean;
@@ -177,7 +194,6 @@ export function ConfiguratorProvider({
 }) {
   const [state, dispatch] = useReducer(configuratorReducer, initialState);
 
-  // Initialize product data on first render
   React.useEffect(() => {
     if (productData) {
       dispatch({ type: 'SET_PRODUCT_DATA', payload: productData });
@@ -192,76 +208,59 @@ export function ConfiguratorProvider({
   const compatibility = useMemo(() => {
     const result = resolveCompatibility(state.config, state.productData?.compatibilityRules ?? []);
     return {
-      disabledOptions: result.disabledOptions,
+      disabledOptions:    result.disabledOptions,
       recommendedOptions: result.recommendedOptions,
-      requiredOptions: result.requiredOptions,
-      hiddenOptions: result.hiddenOptions,
+      requiredOptions:    result.requiredOptions,
+      hiddenOptions:      result.hiddenOptions,
     };
   }, [state.config, state.productData?.compatibilityRules]);
 
-  const currentStepIndex = STEPS.indexOf(state.currentStep);
-  const totalSteps = STEPS.length;
-  const canGoNext = currentStepIndex < totalSteps - 1;
-  const canGoBack = currentStepIndex > 0;
+  const activeSteps      = useMemo(() => getActiveSteps(state.productData), [state.productData]);
+  const currentStepIndex = activeSteps.indexOf(state.currentStep);
+  const totalSteps       = activeSteps.length;
+  const canGoNext        = currentStepIndex < totalSteps - 1;
+  const canGoBack        = currentStepIndex > 0;
 
-  const selectMachine = useCallback((m: MachineOption) => dispatch({ type: 'SELECT_MACHINE', payload: m }), []);
+  const selectMachine     = useCallback((m: MachineOption)     => dispatch({ type: 'SELECT_MACHINE',      payload: m }), []);
   const selectPowerSystem = useCallback((p: PowerSystemOption) => dispatch({ type: 'SELECT_POWER_SYSTEM', payload: p }), []);
-  const selectDeck = useCallback((d: DeckOption) => dispatch({ type: 'SELECT_DECK', payload: d }), []);
-  const toggleAccessory = useCallback((a: AccessoryOption) => dispatch({ type: 'TOGGLE_ACCESSORY', payload: a }), []);
-  const toggleUpgrade = useCallback((u: UpgradeOption) => dispatch({ type: 'TOGGLE_UPGRADE', payload: u }), []);
-  const toggleService = useCallback((s: ServiceOption) => dispatch({ type: 'TOGGLE_SERVICE', payload: s }), []);
-  const goNext = useCallback(() => dispatch({ type: 'NEXT_STEP' }), []);
-  const goBack = useCallback(() => dispatch({ type: 'PREV_STEP' }), []);
-  const goToStep = useCallback((step: ConfigStep) => dispatch({ type: 'SET_STEP', payload: step }), []);
+  const selectDeck        = useCallback((d: DeckOption)        => dispatch({ type: 'SELECT_DECK',         payload: d }), []);
+  const toggleAccessory   = useCallback((a: AccessoryOption)   => dispatch({ type: 'TOGGLE_ACCESSORY',    payload: a }), []);
+  const toggleUpgrade     = useCallback((u: UpgradeOption)     => dispatch({ type: 'TOGGLE_UPGRADE',      payload: u }), []);
+  const toggleService     = useCallback((s: ServiceOption)     => dispatch({ type: 'TOGGLE_SERVICE',      payload: s }), []);
+  const goNext            = useCallback(() => dispatch({ type: 'NEXT_STEP' }), []);
+  const goBack            = useCallback(() => dispatch({ type: 'PREV_STEP' }), []);
+  const goToStep          = useCallback((step: ConfigStep) => dispatch({ type: 'SET_STEP', payload: step }), []);
 
   const isOptionSelected = useCallback((id: string): boolean => {
     const { config } = state;
-    if (config.machine?.id === id) return true;
-    if (config.powerSystem?.id === id) return true;
-    if (config.deckSize?.id === id) return true;
-    if (config.accessories.some(a => a.id === id)) return true;
-    if (config.proUpgrades.some(u => u.id === id)) return true;
-    if (config.services.some(s => s.id === id)) return true;
-    return false;
+    return (
+      config.machine?.id === id ||
+      config.powerSystem?.id === id ||
+      config.deckSize?.id === id ||
+      config.accessories.some(a => a.id === id) ||
+      config.proUpgrades.some(u => u.id === id) ||
+      config.services.some(s => s.id === id)
+    );
   }, [state.config]);
 
-  const isOptionDisabled = useCallback(
-    (id: string) => compatibility.disabledOptions.has(id),
-    [compatibility.disabledOptions]
-  );
+  const isOptionDisabled    = useCallback((id: string) => compatibility.disabledOptions.has(id),    [compatibility.disabledOptions]);
+  const isOptionRecommended = useCallback((id: string) => compatibility.recommendedOptions.has(id), [compatibility.recommendedOptions]);
 
-  const isOptionRecommended = useCallback(
-    (id: string) => compatibility.recommendedOptions.has(id),
-    [compatibility.recommendedOptions]
-  );
-
-  const value = useMemo(
-    () => ({
-      state,
-      dispatch,
-      priceBreakdown,
-      compatibility,
-      currentStepIndex,
-      totalSteps,
-      canGoNext,
-      canGoBack,
-      selectMachine,
-      selectPowerSystem,
-      selectDeck,
-      toggleAccessory,
-      toggleUpgrade,
-      toggleService,
-      goNext,
-      goBack,
-      goToStep,
-      isOptionSelected,
-      isOptionDisabled,
-      isOptionRecommended,
-    }),
-    [state, priceBreakdown, compatibility, currentStepIndex, canGoNext, canGoBack,
-     selectMachine, selectPowerSystem, selectDeck, toggleAccessory, toggleUpgrade, toggleService,
-     goNext, goBack, goToStep, isOptionSelected, isOptionDisabled, isOptionRecommended]
-  );
+  const value = useMemo(() => ({
+    state, dispatch, priceBreakdown, compatibility,
+    activeSteps, currentStepIndex, totalSteps, canGoNext, canGoBack,
+    selectMachine, selectPowerSystem, selectDeck,
+    toggleAccessory, toggleUpgrade, toggleService,
+    goNext, goBack, goToStep,
+    isOptionSelected, isOptionDisabled, isOptionRecommended,
+  }), [
+    state, priceBreakdown, compatibility,
+    activeSteps, currentStepIndex, canGoNext, canGoBack,
+    selectMachine, selectPowerSystem, selectDeck,
+    toggleAccessory, toggleUpgrade, toggleService,
+    goNext, goBack, goToStep,
+    isOptionSelected, isOptionDisabled, isOptionRecommended,
+  ]);
 
   return (
     <ConfiguratorContext.Provider value={value}>

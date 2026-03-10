@@ -1,21 +1,22 @@
 import React from 'react';
 import { useConfigurator } from '../ConfiguratorProvider';
-import { STEP_LABELS, STEP_ORDER, type ConfigStep } from '../types/configurator';
+import { STEP_LABELS } from '../types/configurator';
 
 export function ProgressBar() {
-  const { state, currentStepIndex, goToStep } = useConfigurator();
+  const { state, activeSteps, currentStepIndex, goToStep } = useConfigurator();
+
+  const fillPct = activeSteps.length > 1
+    ? (currentStepIndex / (activeSteps.length - 1)) * 100
+    : 0;
 
   return (
     <nav className="cfg-progress" aria-label="Configurator stappen">
       <div className="cfg-progress__track">
-        <div
-          className="cfg-progress__fill"
-          style={{ width: `${((currentStepIndex) / (STEP_ORDER.length - 1)) * 100}%` }}
-        />
+        <div className="cfg-progress__fill" style={{ width: `${fillPct}%` }} />
       </div>
       <ol className="cfg-progress__steps">
-        {STEP_ORDER.map((step, index) => {
-          const isActive = step === state.currentStep;
+        {activeSteps.map((step, index) => {
+          const isActive    = step === state.currentStep;
           const isCompleted = index < currentStepIndex;
           const isClickable = index <= currentStepIndex;
 
@@ -24,7 +25,7 @@ export function ProgressBar() {
               <button
                 className={[
                   'cfg-progress__step',
-                  isActive && 'cfg-progress__step--active',
+                  isActive    && 'cfg-progress__step--active',
                   isCompleted && 'cfg-progress__step--completed',
                 ].filter(Boolean).join(' ')}
                 onClick={() => isClickable && goToStep(step)}
