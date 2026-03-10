@@ -64,7 +64,46 @@ function buildOfferteMailto(config: MachineConfig, breakdown: PriceBreakdown): s
 
 export function StepSummary() {
   const { state, priceBreakdown, goToStep } = useConfigurator();
+  const [confirmed, setConfirmed] = React.useState(false);
   const offerteHref = buildOfferteMailto(state.config, priceBreakdown);
+
+  function handleAanvragen() {
+    window.location.href = offerteHref;
+    setConfirmed(true);
+  }
+
+  if (confirmed) {
+    return (
+      <div className="cfg-step cfg-step--summary">
+        <div className="cfg-confirmed">
+          <div className="cfg-confirmed__icon">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+              <circle cx="28" cy="28" r="28" fill="#283B5F"/>
+              <path d="M16 28.5L23.5 36L40 20" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <h2 className="cfg-confirmed__title">Configuratie aangevraagd</h2>
+          <p className="cfg-confirmed__sub">
+            Uw aanvraag is verstuurd naar ons team. We nemen zo spoedig mogelijk contact met u op om uw configuratie te bespreken en de bestelling te verwerken.
+          </p>
+          <div className="cfg-confirmed__details">
+            <div className="cfg-confirmed__detail">
+              <span className="cfg-confirmed__detail-label">Machine</span>
+              <span className="cfg-confirmed__detail-value">{state.config.machine?.title ?? '—'}</span>
+            </div>
+            <div className="cfg-confirmed__detail">
+              <span className="cfg-confirmed__detail-label">Contact</span>
+              <span className="cfg-confirmed__detail-value">verkoop@keizers.nu</span>
+            </div>
+          </div>
+          <p className="cfg-confirmed__note">
+            Geen mail ontvangen? Controleer uw verzonden items of neem direct contact op via{' '}
+            <a href="mailto:verkoop@keizers.nu">verkoop@keizers.nu</a>.
+          </p>
+        </div>
+      </div>
+    );
+  }
   const { config } = state;
 
   const sections = [
@@ -181,7 +220,10 @@ export function StepSummary() {
 
           {/* CTAs */}
           <div className="cfg-summary__actions">
-            <button className="cfg-summary__cta cfg-summary__cta--primary">
+            <button
+              className="cfg-summary__cta cfg-summary__cta--primary"
+              onClick={handleAanvragen}
+            >
               Configuratie aanvragen
             </button>
             <a
