@@ -139,6 +139,31 @@ body {
   font-weight: 400;
 }
 
+.cfg-header__logo-img {
+  height: 32px;
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1);
+}
+
+.cfg-header__restart {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--cfg-font-size-sm);
+  cursor: pointer;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--cfg-radius-sm);
+  transition: color var(--cfg-transition), background var(--cfg-transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cfg-header__restart:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
 /* ─── Progress Bar ────────────────────────────────────────────── */
 
 .cfg-progress {

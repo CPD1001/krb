@@ -39,7 +39,7 @@ export function ConfiguratorApp() {
 
   return (
     <ConfiguratorProvider productData={app.productData}>
-      <ConfiguratorShell />
+      <ConfiguratorShell onRestart={() => setApp({ phase: 'advisor' })} />
     </ConfiguratorProvider>
   );
 }

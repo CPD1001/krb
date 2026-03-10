@@ -22,7 +22,7 @@ function StepLoader() {
   );
 }
 
-export function ConfiguratorShell() {
+export function ConfiguratorShell({ onRestart }: { onRestart?: () => void }) {
   const { state } = useConfigurator();
 
   const renderStep = () => {
@@ -41,11 +41,20 @@ export function ConfiguratorShell() {
     <div className="cfg-shell">
       <header className="cfg-header">
         <div className="cfg-header__logo">
-          <span className="cfg-header__logo-text">KEIZERS</span>
+          <img
+            src="https://cdn.shopify.com/s/files/1/0790/7636/0505/files/Keizers_logo_scissor_only.pdf.png?v=1773140997"
+            alt="Keizers"
+            className="cfg-header__logo-img"
+          />
           <span className="cfg-header__logo-divider">|</span>
           <span className="cfg-header__logo-sub">Machine Configurator</span>
         </div>
         <ProgressBar />
+        {onRestart && (
+          <button className="cfg-header__restart" onClick={onRestart}>
+            ← Maaiadvies
+          </button>
+        )}
       </header>
 
       <main className="cfg-main">
