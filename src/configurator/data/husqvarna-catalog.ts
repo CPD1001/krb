@@ -9,8 +9,12 @@ export const husqvarnaCatalog: MachineOption[] = [
     price: 99900,
     category: 'Robotmaaier',
     badge: 'popular',
-    heroImage: '/images/aspire-r6v.jpg',
-    galleryImages: ['/images/aspire-r6v.jpg'],
+    heroImage: 'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/c/co/co-897509.webp',
+    galleryImages: [
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/k/ka/ka-068961.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/s/sc/sc-646397.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/t/tv/tv-807498.webp',
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 400 m² (random)' },
       { label: 'Max. helling',   value: '40%' },
@@ -27,8 +31,12 @@ export const husqvarnaCatalog: MachineOption[] = [
     description: 'Draadloze robotmaaier met EdgeCut voor gazons tot 500 m². Inclusief randmaaisysteem.',
     price: 119900,
     category: 'Robotmaaier',
-    heroImage: '/images/305v.jpg',
-    galleryImages: ['/images/305v.jpg'],
+    heroImage: 'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/p/pf/pf-943017.webp',
+    galleryImages: [
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/h/h310/20/h310-2059.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/h/h310/20/h310-2060.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/h/h310/22/h310-2279.webp',
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 500 m² (random)' },
       { label: 'Max. helling',   value: '40%' },
@@ -44,8 +52,12 @@ export const husqvarnaCatalog: MachineOption[] = [
     description: 'Krachtige draadloze maaier met EdgeCut voor gazons tot 800 m². Stillere werking dan de 305V.',
     price: 169900,
     category: 'Robotmaaier',
-    heroImage: '/images/312v.jpg',
-    galleryImages: ['/images/312v.jpg'],
+    heroImage: 'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/l/lv/lv-714802.webp',
+    galleryImages: [
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/a/aa/aa-701407.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/b/bq/bq-003176.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/j/jk/jk-785318.webp',
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 800 m² (random)' },
       { label: 'Max. helling',   value: '40%' },
@@ -62,8 +74,11 @@ export const husqvarnaCatalog: MachineOption[] = [
     price: 209900,
     category: 'Robotmaaier',
     badge: 'popular',
-    heroImage: '/images/305e-nera.jpg',
-    galleryImages: ['/images/305e-nera.jpg'],
+    heroImage: 'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/m/mf/mf-671775.webp',
+    galleryImages: [
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/r/re/re-493641.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/h/hh/hh-688152.webp',
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 600 m² (random)' },
       { label: 'Max. helling',   value: '30%' },
@@ -80,8 +95,12 @@ export const husqvarnaCatalog: MachineOption[] = [
     description: 'NERA-maaier met WiFi & 4G voor gazons tot 1.000 m². AI-obstakeldetectie en snelle lading.',
     price: 209900,
     category: 'Robotmaaier',
-    heroImage: '/images/310e-nera.jpg',
-    galleryImages: ['/images/310e-nera.jpg'],
+    heroImage: 'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/p/pv/pv-316647.webp',
+    galleryImages: [
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/x/xo/xo-938570.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/v/vx/vx-633874.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/n/np/np-834908.webp',
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 1.000 m² (random)' },
       { label: 'Max. helling',   value: '30%' },
@@ -98,8 +117,10 @@ export const husqvarnaCatalog: MachineOption[] = [
     description: 'Krachtige NERA-maaier voor grote gazons tot 2.200 m² met 50% hellingcapaciteit en elektrische hoogteverstelling.',
     price: 289900,
     category: 'Robotmaaier',
-    heroImage: '/images/320-nera.jpg',
-    galleryImages: ['/images/320-nera.jpg'],
+    heroImage: 'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/q/qo/qo-580996.webp',
+    galleryImages: [
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/a/ak/ak-080507.webp',
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',       value: 'tot 2.200 m² (random)' },
       { label: 'Max. helling',        value: '50%' },
@@ -117,8 +138,13 @@ export const husqvarnaCatalog: MachineOption[] = [
     price: 249900,
     category: 'Robotmaaier',
     badge: 'recommended',
-    heroImage: '/images/405ve-nera.jpg',
-    galleryImages: ['/images/405ve-nera.jpg'],
+    heroImage: 'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/r/rg/rg-036233.webp',
+    galleryImages: [
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/a/aa/aa-885648.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/h/hz/hz-999846.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/m/mn/mn-591471.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/q/qs/qs-694986.webp',
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',     value: 'tot 600 m² (random)' },
       { label: 'Max. helling',      value: '30%' },
@@ -136,8 +162,13 @@ export const husqvarnaCatalog: MachineOption[] = [
     price: 319900,
     category: 'Robotmaaier',
     badge: 'recommended',
-    heroImage: '/images/410ve-nera.jpg',
-    galleryImages: ['/images/410ve-nera.jpg'],
+    heroImage: 'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/g/gj/gj-350557.webp',
+    galleryImages: [
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/b/bt/bt-593068.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/e/ek/ek-025304.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/j/ja/ja-890135.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/n/no/no-545488.webp',
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',     value: 'tot 1.000 m² (random)' },
       { label: 'Max. helling',      value: '30%' },
@@ -154,8 +185,11 @@ export const husqvarnaCatalog: MachineOption[] = [
     description: 'Professionele NERA-maaier voor grote gazons tot 3.200 m². 50% hellingcapaciteit, wildlife-detectie en razendsnel laden.',
     price: 429900,
     category: 'Robotmaaier',
-    heroImage: '/images/430v-nera.jpg',
-    galleryImages: ['/images/430v-nera.jpg'],
+    heroImage: 'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/q/qo/qo-124452.webp',
+    galleryImages: [
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/p/pn/pn-885675.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/v/vr/vr-243397.webp',
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',     value: 'tot 3.200 m² (random)' },
       { label: 'Max. helling',      value: '50%' },
@@ -173,8 +207,11 @@ export const husqvarnaCatalog: MachineOption[] = [
     price: 549900,
     category: 'Robotmaaier',
     badge: 'pro',
-    heroImage: '/images/450v-nera.jpg',
-    galleryImages: ['/images/450v-nera.jpg'],
+    heroImage: 'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/s/sg/sg-529429.webp',
+    galleryImages: [
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/f/fw/fw-472657.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/p/pm/pm-530340.webp',
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',     value: 'tot 5.000 m² (random)' },
       { label: 'Max. helling',      value: '50%' },
@@ -192,8 +229,12 @@ export const husqvarnaCatalog: MachineOption[] = [
     price: 409900,
     category: 'Robotmaaier',
     badge: 'pro',
-    heroImage: '/images/435x-awd-nera.jpg',
-    galleryImages: ['/images/435x-awd-nera.jpg'],
+    heroImage: 'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/u/ut/ut-426126.webp',
+    galleryImages: [
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/h/hs/hs-470042.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/b/bq/bq-105933.webp',
+      'https://www-static-nw.husqvarna.com/-/images/aprimo/husqvarna/robotic-mowers/photos/studio/o/oa/oa-778103.webp',
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',     value: 'tot 3.500 m² (random)' },
       { label: 'Max. helling',      value: '70% — AWD' },
