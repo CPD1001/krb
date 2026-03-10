@@ -1346,14 +1346,14 @@ body {
 }
 
 .cfg-sticky-bar__cta--primary {
-  background: #fff;
-  color: #283B5F;
+  background: #efb661;
+  color: #1a1a1a;
   padding: var(--cfg-space-md) var(--cfg-space-2xl);
   font-size: var(--cfg-font-size-lg);
 }
 
 .cfg-sticky-bar__cta--primary:hover {
-  background: rgba(255, 255, 255, 0.88);
+  background: #e8a84e;
 }
 
 /* ─── Price Overlay ───────────────────────────────────────────── */
@@ -1581,36 +1581,32 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: all var(--cfg-transition);
+  text-align: center;
+  text-decoration: none;
+  display: block;
 }
 
 .cfg-summary__cta--primary {
-  background: var(--cfg-color-accent);
-  color: white;
+  background: #efb661;
+  color: #1a1a1a;
   border: none;
+  font-size: var(--cfg-font-size-lg);
+  padding: var(--cfg-space-lg) var(--cfg-space-xl);
 }
 
 .cfg-summary__cta--primary:hover {
-  background: var(--cfg-color-accent-hover);
+  background: #e8a84e;
   transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(239, 182, 97, 0.4);
 }
 
-.cfg-summary__cta--secondary {
-  background: var(--cfg-color-surface);
-  color: var(--cfg-color-text);
-  border: 1px solid var(--cfg-color-border);
-}
-
-.cfg-summary__cta--secondary:hover {
-  border-color: var(--cfg-color-border-hover);
-}
-
-.cfg-summary__cta--tertiary {
+.cfg-summary__cta--offerte {
   background: transparent;
   color: var(--cfg-color-accent);
-  border: 1px solid var(--cfg-color-accent);
+  border: 1.5px solid var(--cfg-color-accent);
 }
 
-.cfg-summary__cta--tertiary:hover {
+.cfg-summary__cta--offerte:hover {
   background: var(--cfg-color-accent-glow);
 }
 

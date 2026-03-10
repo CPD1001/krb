@@ -1,9 +1,70 @@
 import React from 'react';
 import { useConfigurator } from '../ConfiguratorProvider';
 import { formatPrice } from '../engine/pricing';
+import type { MachineConfig, PriceBreakdown } from '../types/configurator';
+
+function buildOfferteMailto(config: MachineConfig, breakdown: PriceBreakdown): string {
+  const lines: string[] = [];
+
+  lines.push('Beste Keizers team,');
+  lines.push('');
+  lines.push('Via de online Automower configurator heb ik de volgende configuratie samengesteld. Ik ontvang graag een offerte hiervoor.');
+  lines.push('');
+  lines.push('════════════════════════════════');
+  lines.push('CONFIGURATIE OVERZICHT');
+  lines.push('════════════════════════════════');
+  lines.push('');
+
+  if (config.machine) {
+    lines.push(`Machine:`);
+    lines.push(`  ${config.machine.title}${breakdown.isLease ? ' (inbegrepen in lease)' : ` — ${formatPrice(config.machine.price)}`}`);
+    lines.push('');
+  }
+
+  if (config.accessories.length > 0) {
+    lines.push('Accessoires:');
+    config.accessories.forEach(a => lines.push(`  ${a.title} — ${formatPrice(a.price)}`));
+    lines.push('');
+  }
+
+  if (config.services.length > 0) {
+    lines.push('Service & Installatie:');
+    config.services.forEach(s => {
+      const billing = (s as any).billing === 'monthly' ? '/maand' : '';
+      lines.push(`  ${s.title} — ${formatPrice(s.price)}${billing}`);
+    });
+    lines.push('');
+  }
+
+  lines.push('════════════════════════════════');
+  if (breakdown.isLease) {
+    lines.push(`Maandelijks: ${formatPrice(breakdown.monthlyPrice)}/maand`);
+    if (breakdown.totalPrice > 0) {
+      lines.push(`Eenmalig:    ${formatPrice(breakdown.totalPrice)}`);
+    }
+  } else {
+    lines.push(`Totaalbedrag: ${formatPrice(breakdown.totalPrice)}`);
+    if (breakdown.bundleDiscount > 0) {
+      lines.push(`Bundelkorting: -${formatPrice(breakdown.bundleDiscount)}`);
+    }
+  }
+  lines.push('════════════════════════════════');
+  lines.push('');
+  lines.push('Met vriendelijke groet,');
+  lines.push('');
+  lines.push('[Uw naam]');
+  lines.push('[Uw telefoonnummer]');
+
+  const subject = encodeURIComponent(
+    `Offerteaanvraag Automower${config.machine ? ` — ${config.machine.title}` : ''}`
+  );
+  const body = encodeURIComponent(lines.join('\n'));
+  return `mailto:verkoop@keizers.nu?subject=${subject}&body=${body}`;
+}
 
 export function StepSummary() {
   const { state, priceBreakdown, goToStep } = useConfigurator();
+  const offerteHref = buildOfferteMailto(state.config, priceBreakdown);
   const { config } = state;
 
   const sections = [
@@ -121,14 +182,14 @@ export function StepSummary() {
           {/* CTAs */}
           <div className="cfg-summary__actions">
             <button className="cfg-summary__cta cfg-summary__cta--primary">
-              Toevoegen aan offerte
+              Toevoegen aan winkelwagen
             </button>
-            <button className="cfg-summary__cta cfg-summary__cta--secondary">
-              Configuratie opslaan als PDF
-            </button>
-            <button className="cfg-summary__cta cfg-summary__cta--tertiary">
+            <a
+              href={offerteHref}
+              className="cfg-summary__cta cfg-summary__cta--offerte"
+            >
               Offerte aanvragen
-            </button>
+            </a>
           </div>
         </div>
       </div>

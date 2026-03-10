@@ -107,7 +107,7 @@ export function StickyPriceBar() {
             </button>
           ) : (
             <button className="cfg-sticky-bar__cta cfg-sticky-bar__cta--primary">
-              Toevoegen aan offerte
+              Toevoegen aan winkelwagen
             </button>
           )}
         </div>
