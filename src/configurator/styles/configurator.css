@@ -7,19 +7,19 @@
 
 :root {
   /* Colors */
-  --cfg-color-bg: #0a0a0a;
-  --cfg-color-bg-elevated: #141414;
-  --cfg-color-bg-card: #1a1a1a;
-  --cfg-color-bg-card-hover: #222222;
-  --cfg-color-bg-card-selected: #1a2332;
-  --cfg-color-surface: #1e1e1e;
-  --cfg-color-border: #2a2a2a;
-  --cfg-color-border-hover: #3a3a3a;
+  --cfg-color-bg: #fbfbfb;
+  --cfg-color-bg-elevated: #f3f3f3;
+  --cfg-color-bg-card: #ffffff;
+  --cfg-color-bg-card-hover: #f0f4f9;
+  --cfg-color-bg-card-selected: #e8eef7;
+  --cfg-color-surface: #f5f5f5;
+  --cfg-color-border: #e2e2e2;
+  --cfg-color-border-hover: #c8c8c8;
   --cfg-color-border-selected: #283B5F;
 
-  --cfg-color-text: #f5f5f5;
-  --cfg-color-text-secondary: #999999;
-  --cfg-color-text-muted: #666666;
+  --cfg-color-text: #1a1a1a;
+  --cfg-color-text-secondary: #555555;
+  --cfg-color-text-muted: #888888;
 
   --cfg-color-accent: #283B5F;
   --cfg-color-accent-light: #5b7db8;
@@ -253,7 +253,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #0d0d0d 100%);
+  background: linear-gradient(135deg, #f0f2f5 0%, #fbfbfb 50%, #f0f2f5 100%);
   border-right: 1px solid var(--cfg-color-border);
 }
 
@@ -319,7 +319,7 @@ body {
   width: 200px;
   height: 120px;
   border-radius: var(--cfg-radius-lg);
-  background: linear-gradient(145deg, #222, #2a2a2a);
+  background: linear-gradient(145deg, #e8e8e8, #f0f0f0);
   border: 1px solid var(--cfg-color-border);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
@@ -524,7 +524,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+  background: linear-gradient(180deg, rgba(0,0,0,0.02) 0%, transparent 100%);
   overflow: hidden;
 }
 
