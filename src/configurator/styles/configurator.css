@@ -1346,14 +1346,14 @@ body {
 }
 
 .cfg-sticky-bar__cta--primary {
-  background: #efb661;
-  color: #1a1a1a;
+  background: #fff;
+  color: #283B5F;
   padding: var(--cfg-space-md) var(--cfg-space-2xl);
   font-size: var(--cfg-font-size-lg);
 }
 
 .cfg-sticky-bar__cta--primary:hover {
-  background: #e8a84e;
+  background: rgba(255, 255, 255, 0.88);
 }
 
 /* ─── Price Overlay ───────────────────────────────────────────── */
@@ -1587,17 +1587,16 @@ body {
 }
 
 .cfg-summary__cta--primary {
-  background: #efb661;
-  color: #1a1a1a;
+  background: var(--cfg-color-accent);
+  color: #fff;
   border: none;
   font-size: var(--cfg-font-size-lg);
   padding: var(--cfg-space-lg) var(--cfg-space-xl);
 }
 
 .cfg-summary__cta--primary:hover {
-  background: #e8a84e;
+  background: var(--cfg-color-accent-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(239, 182, 97, 0.4);
 }
 
 .cfg-summary__cta--offerte {
