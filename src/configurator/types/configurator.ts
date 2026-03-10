@@ -9,7 +9,8 @@ export interface ConfigOption {
   image?: string;
   badge?: 'recommended' | 'popular' | 'new' | 'pro';
   compatibleWith?: string[];
-  incompatibleWith?: string[];
+  incompatibleWith?: string[];   // marks others as disabled in UI + removes them on select
+  removesOnSelect?: string[];    // removes these on select, but does NOT disable them in UI
   requires?: string[];
   specs?: Record<string, string>;
 }

@@ -111,9 +111,8 @@ body {
   justify-content: space-between;
   height: var(--cfg-header-height);
   padding: 0 var(--cfg-space-xl);
-  background: rgba(10, 10, 10, 0.9);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--cfg-color-border);
+  background: #283B5F;
+  border-bottom: none;
 }
 
 .cfg-header__logo {
@@ -126,17 +125,17 @@ body {
   font-size: var(--cfg-font-size-lg);
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: var(--cfg-color-text);
+  color: #fff;
 }
 
 .cfg-header__logo-divider {
-  color: var(--cfg-color-text-muted);
+  color: rgba(255, 255, 255, 0.35);
   margin: 0 var(--cfg-space-xs);
 }
 
 .cfg-header__logo-sub {
   font-size: var(--cfg-font-size-sm);
-  color: var(--cfg-color-text-secondary);
+  color: rgba(255, 255, 255, 0.65);
   font-weight: 400;
 }
 
@@ -153,14 +152,14 @@ body {
 
 .cfg-progress__track {
   height: 2px;
-  background: var(--cfg-color-border);
+  background: rgba(255, 255, 255, 0.25);
   border-radius: 2px;
   overflow: hidden;
 }
 
 .cfg-progress__fill {
   height: 100%;
-  background: var(--cfg-color-accent);
+  background: #fff;
   border-radius: 2px;
   transition: width var(--cfg-transition-slow);
 }
@@ -203,36 +202,36 @@ body {
   border-radius: 50%;
   font-size: 10px;
   font-weight: 600;
-  background: var(--cfg-color-surface);
-  color: var(--cfg-color-text-secondary);
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
   transition: all var(--cfg-transition);
 }
 
 .cfg-progress__step--active .cfg-progress__step-number {
-  background: var(--cfg-color-accent);
-  color: white;
-  box-shadow: 0 0 0 4px var(--cfg-color-accent-glow);
+  background: #fff;
+  color: #283B5F;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
 }
 
 .cfg-progress__step--completed .cfg-progress__step-number {
-  background: var(--cfg-color-success);
-  color: white;
+  background: rgba(255, 255, 255, 0.85);
+  color: #283B5F;
 }
 
 .cfg-progress__step-label {
   font-size: 10px;
-  color: var(--cfg-color-text-muted);
+  color: rgba(255, 255, 255, 0.55);
   white-space: nowrap;
   transition: color var(--cfg-transition);
 }
 
 .cfg-progress__step--active .cfg-progress__step-label {
-  color: var(--cfg-color-text);
+  color: #fff;
   font-weight: 500;
 }
 
 .cfg-progress__step--completed .cfg-progress__step-label {
-  color: var(--cfg-color-text-secondary);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* ─── Main Layout ─────────────────────────────────────────────── */

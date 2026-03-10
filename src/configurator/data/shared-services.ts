@@ -85,7 +85,8 @@ export const sharedServices: ServiceOption[] = [
     description: 'Eenvoudige installatie voor een vlak gazon zonder noemenswaardige obstakels of hellingen.',
     price: 30000,
     category: 'installation',
-    incompatibleWith: ['zelf-installeren', 'installatie-level-2', 'installatie-level-3'],
+    incompatibleWith: ['installatie-level-2', 'installatie-level-3'],
+    removesOnSelect: ['zelf-installeren'],
   },
   {
     id: 'installatie-level-2',
@@ -96,7 +97,8 @@ export const sharedServices: ServiceOption[] = [
     price: 50000,
     category: 'installation',
     badge: 'popular',
-    incompatibleWith: ['zelf-installeren', 'installatie-level-1', 'installatie-level-3'],
+    incompatibleWith: ['installatie-level-1', 'installatie-level-3'],
+    removesOnSelect: ['zelf-installeren'],
   },
   {
     id: 'installatie-level-3',
@@ -106,7 +108,8 @@ export const sharedServices: ServiceOption[] = [
       'Uitgebreide installatie voor complexe tuinen met steile hellingen, meerdere obstakels of aparte graseilanden.',
     price: 70000,
     category: 'installation',
-    incompatibleWith: ['zelf-installeren', 'installatie-level-1', 'installatie-level-2'],
+    incompatibleWith: ['installatie-level-1', 'installatie-level-2'],
+    removesOnSelect: ['zelf-installeren'],
   },
 ];
 

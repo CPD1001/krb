@@ -119,7 +119,6 @@ function configuratorReducer(state: ConfiguratorState, action: ConfiguratorActio
     case 'TOGGLE_SERVICE': {
       const exists = state.config.services.some(s => s.id === action.payload.id);
       if (exists) {
-        // De-select
         return {
           ...state,
           config: {
@@ -128,14 +127,17 @@ function configuratorReducer(state: ConfiguratorState, action: ConfiguratorActio
           },
         };
       }
-      // Select: also remove incompatible services
-      const incompatible = new Set(action.payload.incompatibleWith ?? []);
+      // Select: remove incompatible AND removesOnSelect services
+      const toRemove = new Set([
+        ...(action.payload.incompatibleWith ?? []),
+        ...(action.payload.removesOnSelect   ?? []),
+      ]);
       return {
         ...state,
         config: {
           ...state.config,
           services: [
-            ...state.config.services.filter(s => !incompatible.has(s.id)),
+            ...state.config.services.filter(s => !toRemove.has(s.id)),
             action.payload,
           ],
         },
