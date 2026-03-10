@@ -111,12 +111,6 @@ function buildRecommendation(
   const machine = husqvarnaCatalog.find(m => m.id === spec.id)!;
   const accessories = getAccessoriesForModel(spec.id);
 
-  // Only expose the suggested installation level + zelf-installeren
-  const installationIds = ['installatie-level-1', 'installatie-level-2', 'installatie-level-3'];
-  const services = sharedServices.filter(
-    s => !installationIds.includes(s.id) || s.id === suggestedInstallId
-  );
-
   // Pre-select accessories
   const suggestedAccessories: string[] = ['automower-house'];
   if (slopePct >= 30 && spec.id !== '435x-awd-nera') {
@@ -125,6 +119,12 @@ function buildRecommendation(
 
   // Pre-select installation level
   const suggestedInstallId = suggestInstallationLevel(slopePct);
+
+  // Only expose the suggested installation level + zelf-installeren
+  const installationIds = ['installatie-level-1', 'installatie-level-2', 'installatie-level-3'];
+  const services = sharedServices.filter(
+    s => !installationIds.includes(s.id) || s.id === suggestedInstallId
+  );
 
   // Build defaultConfig
   const defaultAccessories = suggestedAccessories
