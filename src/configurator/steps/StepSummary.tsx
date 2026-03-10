@@ -119,7 +119,7 @@ export function StepSummary() {
 
       <div className="cfg-step__content">
         <div className="cfg-summary">
-          {sections.map(section => (
+          {sections.filter(s => s.items.length > 0).map(section => (
             <div key={section.step} className="cfg-summary__section">
               <div className="cfg-summary__section-header">
                 <h3 className="cfg-summary__section-title">{section.title}</h3>
