@@ -182,13 +182,13 @@ export function StepSummary() {
           {/* CTAs */}
           <div className="cfg-summary__actions">
             <button className="cfg-summary__cta cfg-summary__cta--primary">
-              Toevoegen aan winkelwagen
+              Configuratie aanvragen
             </button>
             <a
               href={offerteHref}
               className="cfg-summary__cta cfg-summary__cta--offerte"
             >
-              Offerte aanvragen
+              Offerte per e-mail
             </a>
           </div>
         </div>
