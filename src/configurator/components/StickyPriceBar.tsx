@@ -18,10 +18,16 @@ export function StickyPriceBar() {
               <button onClick={() => setShowBreakdown(false)} aria-label="Sluiten">&times;</button>
             </div>
             <div className="cfg-price-overlay__items">
+              {priceBreakdown.isLease && (
+                <div className="cfg-price-overlay__item cfg-price-overlay__item--monthly">
+                  <span>Maandelijks (lease)</span>
+                  <span>{formatPrice(priceBreakdown.monthlyPrice)}/mnd</span>
+                </div>
+              )}
               {priceBreakdown.lineItems.map((item, i) => (
                 <div key={i} className="cfg-price-overlay__item">
                   <span>{item.label}</span>
-                  <span>{formatPrice(item.price)}</span>
+                  <span>{item.price === 0 ? '—' : formatPrice(item.price)}</span>
                 </div>
               ))}
               {priceBreakdown.activeBundles.map((bundle, i) => (
@@ -32,8 +38,17 @@ export function StickyPriceBar() {
               ))}
             </div>
             <div className="cfg-price-overlay__total">
-              <span>Totaal</span>
-              <span>{formatPrice(priceBreakdown.totalPrice)}</span>
+              {priceBreakdown.isLease ? (
+                <>
+                  <span>Eenmalig</span>
+                  <span>{priceBreakdown.totalPrice > 0 ? formatPrice(priceBreakdown.totalPrice) : '—'}</span>
+                </>
+              ) : (
+                <>
+                  <span>Totaal</span>
+                  <span>{formatPrice(priceBreakdown.totalPrice)}</span>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -55,12 +70,29 @@ export function StickyPriceBar() {
 
         <div className="cfg-sticky-bar__center">
           <button className="cfg-sticky-bar__price-btn" onClick={() => setShowBreakdown(!showBreakdown)}>
-            <span className="cfg-sticky-bar__price-label">Totaal</span>
-            <span className="cfg-sticky-bar__price-value">{formatPrice(priceBreakdown.totalPrice)}</span>
-            {priceBreakdown.bundleDiscount > 0 && (
-              <span className="cfg-sticky-bar__savings">
-                -{formatPrice(priceBreakdown.bundleDiscount)} bespaard
-              </span>
+            {priceBreakdown.isLease ? (
+              <>
+                <span className="cfg-sticky-bar__price-label">Maandelijks</span>
+                <span className="cfg-sticky-bar__price-value">
+                  {formatPrice(priceBreakdown.monthlyPrice)}
+                  <span className="cfg-sticky-bar__price-period">/maand</span>
+                </span>
+                {priceBreakdown.totalPrice > 0 && (
+                  <span className="cfg-sticky-bar__savings">
+                    + {formatPrice(priceBreakdown.totalPrice)} eenmalig
+                  </span>
+                )}
+              </>
+            ) : (
+              <>
+                <span className="cfg-sticky-bar__price-label">Totaal</span>
+                <span className="cfg-sticky-bar__price-value">{formatPrice(priceBreakdown.totalPrice)}</span>
+                {priceBreakdown.bundleDiscount > 0 && (
+                  <span className="cfg-sticky-bar__savings">
+                    -{formatPrice(priceBreakdown.bundleDiscount)} bespaard
+                  </span>
+                )}
+              </>
             )}
           </button>
         </div>

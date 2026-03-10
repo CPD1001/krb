@@ -102,8 +102,10 @@ export interface PriceBreakdown {
   optionsTotal: number;
   bundleDiscount: number;
   activeBundles: { label: string; discount: number }[];
-  totalPrice: number;
+  totalPrice: number;       // one-time total (excl. machine + monthly when lease active)
   lineItems: { label: string; price: number }[];
+  isLease: boolean;
+  monthlyPrice: number;     // > 0 when lease is active
 }
 
 // ─── Configurator State ──────────────────────────────────────────

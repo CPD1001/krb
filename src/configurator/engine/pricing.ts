@@ -10,13 +10,23 @@ export function calculatePrice(
 ): PriceBreakdown {
   const lineItems: { label: string; price: number }[] = [];
 
-  // Base machine price
-  const basePrice = config.machine?.price ?? 0;
+  // Detect active lease service
+  const leaseService = config.services.find(s => (s as any).category === 'lease');
+  const isLease = !!leaseService;
+  const monthlyPrice = leaseService?.price ?? 0;
+
+  // Base machine price — €0 when lease is active (included in monthly)
+  const basePrice = isLease ? 0 : (config.machine?.price ?? 0);
   if (config.machine) {
-    lineItems.push({ label: config.machine.title, price: basePrice });
+    lineItems.push({
+      label: isLease
+        ? `${config.machine.title} — inbegrepen in lease`
+        : config.machine.title,
+      price: basePrice,
+    });
   }
 
-  // Power system delta (price is absolute, not delta — adjust if needed)
+  // Power system
   if (config.powerSystem && config.powerSystem.price > 0) {
     lineItems.push({ label: config.powerSystem.title, price: config.powerSystem.price });
   }
@@ -36,14 +46,15 @@ export function calculatePrice(
     lineItems.push({ label: upg.title, price: upg.price });
   }
 
-  // Services
+  // Services — skip the monthly lease itself from one-time lineItems
   for (const svc of config.services) {
+    if ((svc as any).billing === 'monthly') continue;
     lineItems.push({ label: svc.title, price: svc.price });
   }
 
   const optionsTotal = lineItems.reduce((sum, item) => sum + item.price, 0) - basePrice;
 
-  // Calculate bundle discounts
+  // Bundle discounts
   const selectedIds = getAllSelectedIds(config);
   const activeBundles = findActiveBundles(selectedIds, bundleRules);
   const bundleDiscount = activeBundles.reduce((sum, b) => sum + b.discount, 0);
@@ -57,6 +68,8 @@ export function calculatePrice(
     activeBundles,
     totalPrice,
     lineItems,
+    isLease,
+    monthlyPrice,
   };
 }
 
