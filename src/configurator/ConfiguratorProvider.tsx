@@ -181,6 +181,8 @@ interface ConfiguratorContextValue {
   isOptionSelected: (id: string) => boolean;
   isOptionDisabled: (id: string) => boolean;
   isOptionRecommended: (id: string) => boolean;
+  isConfirmed: boolean;
+  confirmAanvraag: () => void;
 }
 
 const ConfiguratorContext = createContext<ConfiguratorContextValue | null>(null);
@@ -195,6 +197,7 @@ export function ConfiguratorProvider({
   productData?: ProductConfigData;
 }) {
   const [state, dispatch] = useReducer(configuratorReducer, initialState);
+  const [isConfirmed, setIsConfirmed] = React.useState(false);
 
   React.useEffect(() => {
     if (productData) {
@@ -248,6 +251,8 @@ export function ConfiguratorProvider({
   const isOptionDisabled    = useCallback((id: string) => compatibility.disabledOptions.has(id),    [compatibility.disabledOptions]);
   const isOptionRecommended = useCallback((id: string) => compatibility.recommendedOptions.has(id), [compatibility.recommendedOptions]);
 
+  const confirmAanvraag = useCallback(() => setIsConfirmed(true), []);
+
   const value = useMemo(() => ({
     state, dispatch, priceBreakdown, compatibility,
     activeSteps, currentStepIndex, totalSteps, canGoNext, canGoBack,
@@ -255,6 +260,7 @@ export function ConfiguratorProvider({
     toggleAccessory, toggleUpgrade, toggleService,
     goNext, goBack, goToStep,
     isOptionSelected, isOptionDisabled, isOptionRecommended,
+    isConfirmed, confirmAanvraag,
   }), [
     state, priceBreakdown, compatibility,
     activeSteps, currentStepIndex, canGoNext, canGoBack,
@@ -262,6 +268,7 @@ export function ConfiguratorProvider({
     toggleAccessory, toggleUpgrade, toggleService,
     goNext, goBack, goToStep,
     isOptionSelected, isOptionDisabled, isOptionRecommended,
+    isConfirmed, confirmAanvraag,
   ]);
 
   return (

@@ -63,16 +63,15 @@ function buildOfferteMailto(config: MachineConfig, breakdown: PriceBreakdown): s
 }
 
 export function StepSummary() {
-  const { state, priceBreakdown, goToStep } = useConfigurator();
-  const [confirmed, setConfirmed] = React.useState(false);
+  const { state, priceBreakdown, goToStep, isConfirmed, confirmAanvraag } = useConfigurator();
   const offerteHref = buildOfferteMailto(state.config, priceBreakdown);
 
   function handleAanvragen() {
     window.location.href = offerteHref;
-    setConfirmed(true);
+    confirmAanvraag();
   }
 
-  if (confirmed) {
+  if (isConfirmed) {
     return (
       <div className="cfg-step cfg-step--summary">
         <div className="cfg-confirmed">

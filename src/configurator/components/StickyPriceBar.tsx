@@ -3,7 +3,7 @@ import { useConfigurator } from '../ConfiguratorProvider';
 import { formatPrice } from '../engine/pricing';
 
 export function StickyPriceBar() {
-  const { priceBreakdown, currentStepIndex, totalSteps, goNext, state } = useConfigurator();
+  const { priceBreakdown, currentStepIndex, totalSteps, goNext, state, isConfirmed, confirmAanvraag } = useConfigurator();
   const [showBreakdown, setShowBreakdown] = useState(false);
   const isSummary = state.currentStep === 'summary';
 
@@ -105,8 +105,24 @@ export function StickyPriceBar() {
                 <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
               </svg>
             </button>
+          ) : isConfirmed ? (
+            <button className="cfg-sticky-bar__cta cfg-sticky-bar__cta--primary" disabled style={{opacity:0.6,cursor:'default'}}>
+              ✓ Aangevraagd
+            </button>
           ) : (
-            <button className="cfg-sticky-bar__cta cfg-sticky-bar__cta--primary">
+            <button className="cfg-sticky-bar__cta cfg-sticky-bar__cta--primary" onClick={() => {
+              const { config, productData } = state;
+              // build mailto inline
+              const lines = ['Beste Keizers team,', '', 'Via de online configurator heb ik de volgende configuratie samengesteld:', ''];
+              if (config.machine) lines.push(`Machine: ${config.machine.title}`);
+              if (config.accessories.length) { lines.push(''); lines.push('Accessoires:'); config.accessories.forEach(a => lines.push(`  ${a.title}`)); }
+              if (config.services.length) { lines.push(''); lines.push('Service:'); config.services.forEach(s => lines.push(`  ${s.title}`)); }
+              lines.push('', 'Met vriendelijke groet,', '', '[Uw naam]', '[Uw telefoonnummer]');
+              const subject = encodeURIComponent(`Configuratie aanvraag${config.machine ? ` — ${config.machine.title}` : ''}`);
+              const body = encodeURIComponent(lines.join('\n'));
+              window.location.href = `mailto:verkoop@keizers.nu?subject=${subject}&body=${body}`;
+              confirmAanvraag();
+            }}>
               Configuratie aanvragen
             </button>
           )}
