@@ -110,7 +110,12 @@ function buildRecommendation(
 ): Recommendation {
   const machine = husqvarnaCatalog.find(m => m.id === spec.id)!;
   const accessories = getAccessoriesForModel(spec.id);
-  const services = sharedServices;
+
+  // Only expose the suggested installation level + zelf-installeren
+  const installationIds = ['installatie-level-1', 'installatie-level-2', 'installatie-level-3'];
+  const services = sharedServices.filter(
+    s => !installationIds.includes(s.id) || s.id === suggestedInstallId
+  );
 
   // Pre-select accessories
   const suggestedAccessories: string[] = ['automower-house'];

@@ -18,7 +18,7 @@
 }
 
 .adv-header__logo        { display: flex; align-items: center; gap: 0.5rem; }
-.adv-header__logo-text   { font-weight: 700; font-size: 1rem; letter-spacing: 0.1em; color: var(--cfg-color-text, #1a1a1a); }
+.adv-header__logo-img    { height: 28px; width: auto; display: block; }
 .adv-header__logo-divider { color: var(--cfg-color-border, #e2e2e2); }
 .adv-header__logo-sub    { font-size: 0.875rem; color: var(--cfg-color-text-secondary, #555); }
 

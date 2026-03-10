@@ -63,7 +63,11 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
     <div className="adv-shell">
       <header className="adv-header">
         <div className="adv-header__logo">
-          <span className="adv-header__logo-text">KEIZERS</span>
+          <img
+            src="https://cdn.shopify.com/s/files/1/0790/7636/0505/files/Keizers_logo_scissor_only.pdf.png?v=1773140997"
+            alt="Keizers"
+            className="adv-header__logo-img"
+          />
           <span className="adv-header__logo-divider">|</span>
           <span className="adv-header__logo-sub">Maaiadvies op maat</span>
         </div>
