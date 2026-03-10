@@ -74,6 +74,29 @@ export function IconGardenXL({ size = defaults.size }: IconProps) {
   );
 }
 
+export function IconGardenXXL({ size = defaults.size }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <rect x="1" y="3" width="38" height="34" rx="2" stroke="currentColor" strokeWidth={defaults.strokeWidth}/>
+      {/* 2x3 field grid */}
+      <line x1="20" y1="3" x2="20" y2="37" stroke="currentColor" strokeWidth="1" opacity="0.25" strokeDasharray="3 2"/>
+      <line x1="1" y1="16" x2="39" y2="16" stroke="currentColor" strokeWidth="1" opacity="0.25" strokeDasharray="3 2"/>
+      <line x1="1" y1="27" x2="39" y2="27" stroke="currentColor" strokeWidth="1" opacity="0.25" strokeDasharray="3 2"/>
+      {/* house + barn */}
+      <rect x="14" y="7" width="8" height="6" rx="1" stroke="currentColor" strokeWidth="1.1" opacity="0.5"/>
+      <path d="M14 7 L18 4 L22 7" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round" opacity="0.5"/>
+      <rect x="23" y="7" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.1" opacity="0.4"/>
+      {/* trees in corners */}
+      <circle cx="7"  cy="10" r="2.5" stroke="currentColor" strokeWidth="1.1" opacity="0.35"/>
+      <circle cx="33" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.1" opacity="0.35"/>
+      <circle cx="7"  cy="22" r="2.5" stroke="currentColor" strokeWidth="1.1" opacity="0.35"/>
+      <circle cx="33" cy="22" r="2.5" stroke="currentColor" strokeWidth="1.1" opacity="0.35"/>
+      <circle cx="7"  cy="32" r="2.5" stroke="currentColor" strokeWidth="1.1" opacity="0.35"/>
+      <circle cx="33" cy="32" r="2.5" stroke="currentColor" strokeWidth="1.1" opacity="0.35"/>
+    </svg>
+  );
+}
+
 // ─── Slope / terrain profile (side view) ─────────────────────────
 
 export function IconSlopeFlat({ size = defaults.size }: IconProps) {

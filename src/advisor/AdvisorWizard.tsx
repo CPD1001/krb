@@ -7,7 +7,7 @@ import {
 import { husqvarnaCatalog } from '../configurator/data/husqvarna-catalog';
 import { formatPrice } from '../configurator/engine/pricing';
 import {
-  IconGardenXS, IconGardenSM, IconGardenMD, IconGardenLG, IconGardenXL,
+  IconGardenXS, IconGardenSM, IconGardenMD, IconGardenLG, IconGardenXL, IconGardenXXL,
   IconSlopeFlat, IconSlopeMild, IconSlopeModerate, IconSlopeSteep,
   IconWifi, IconBluetooth, IconHedgehog, IconLeaf,
 } from './icons';
@@ -256,11 +256,12 @@ function BackBtn({ onClick }: { onClick: () => void }) {
 // ─── Static option data ───────────────────────────────────────────
 
 const AREA_OPTIONS: { id: AreaBucket; label: string; sub: string; icon: React.ReactNode }[] = [
-  { id: 'xs', label: 'Klein',      sub: 'tot 500 m²',          icon: <IconGardenXS /> },
-  { id: 'sm', label: 'Middel',     sub: '500 – 1.000 m²',      icon: <IconGardenSM /> },
-  { id: 'md', label: 'Groot',      sub: '1.000 – 2.200 m²',    icon: <IconGardenMD /> },
-  { id: 'lg', label: 'Heel groot', sub: '2.200 – 5.000 m²',    icon: <IconGardenLG /> },
-  { id: 'xl', label: 'Zeer groot', sub: '> 5.000 m²',          icon: <IconGardenXL /> },
+  { id: 'xs',  label: 'Klein',       sub: 'tot 500 m²',           icon: <IconGardenXS /> },
+  { id: 'sm',  label: 'Middel',      sub: '500 – 1.000 m²',       icon: <IconGardenSM /> },
+  { id: 'md',  label: 'Groot',       sub: '1.000 – 2.000 m²',     icon: <IconGardenMD /> },
+  { id: 'lg',  label: 'Heel groot',  sub: '2.000 – 5.000 m²',     icon: <IconGardenLG /> },
+  { id: 'xl',  label: 'Zeer groot',  sub: '5.000 – 7.500 m²',     icon: <IconGardenXL /> },
+  { id: 'xxl', label: 'Landgoed',    sub: '> 7.500 m²',           icon: <IconGardenXXL /> },
 ];
 
 const SLOPE_OPTIONS: { id: SlopeBucket; label: string; sub: string; icon: React.ReactNode }[] = [

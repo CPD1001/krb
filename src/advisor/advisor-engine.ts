@@ -5,7 +5,7 @@ import { sharedServices, suggestInstallationLevel } from '../configurator/data/s
 
 // ─── Advisor answer types ─────────────────────────────────────────
 
-export type AreaBucket = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type AreaBucket = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 export type SlopeBucket = 'flat' | 'mild' | 'moderate' | 'steep';
 
 export interface AdvisorAnswers {
@@ -15,13 +15,14 @@ export interface AdvisorAnswers {
   wantsWildlife: boolean | null;   // AI wildlife detection
 }
 
-// Representative m² and slope % used for filtering
+// Representative m² used for model filtering (upper end of range for safety)
 const AREA_M2: Record<AreaBucket, number> = {
-  xs: 500,    // < 500 m²  → use 500 for conservative match
-  sm: 800,    // 500–1.000
-  md: 1500,   // 1.000–2.200
-  lg: 3200,   // 2.200–5.000
-  xl: 6000,   // > 5.000
+  xs:  500,   // ≤ 500 m²
+  sm:  800,   // 500 – 1.000 m²
+  md: 1500,   // 1.000 – 2.000 m²
+  lg: 3000,   // 2.000 – 5.000 m²
+  xl: 5000,   // 5.000 – 7.500 m²
+  xxl: 7500,  // > 7.500 m²
 };
 
 const SLOPE_PCT: Record<SlopeBucket, number> = {
@@ -161,11 +162,12 @@ function buildRecommendation(
 
 function buildRationale(spec: ModelSpec, answers: AdvisorAnswers): string {
   const areaLabels: Record<AreaBucket, string> = {
-    xs: 'een gazon tot 500 m²',
-    sm: 'een gazon van 500 tot 1.000 m²',
-    md: 'een gazon van 1.000 tot 2.200 m²',
-    lg: 'een groot gazon van 2.200 tot 5.000 m²',
-    xl: 'een zeer groot gazon van meer dan 5.000 m²',
+    xs:  'een gazon tot 500 m²',
+    sm:  'een gazon van 500 tot 1.000 m²',
+    md:  'een gazon van 1.000 tot 2.000 m²',
+    lg:  'een gazon van 2.000 tot 5.000 m²',
+    xl:  'een gazon van 5.000 tot 7.500 m²',
+    xxl: 'een gazon van meer dan 7.500 m²',
   };
   const slopeLabels: Record<SlopeBucket, string> = {
     flat:     'een vlak terrein',
