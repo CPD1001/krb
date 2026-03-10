@@ -12,6 +12,7 @@ export const sharedServices: ServiceOption[] = [
     badge: 'recommended',
     duration: '5 jaar',
     billing: 'once',
+    incompatibleWith: ['service-plus-36m', 'service-plus-60m', 'lease-plus-36m', 'lease-plus-60m'],
   },
 
   // ── Onderhoudscontract ───────────────────────────────────────────
@@ -25,7 +26,7 @@ export const sharedServices: ServiceOption[] = [
     category: 'service-contract',
     duration: '36 maanden',
     billing: 'once',
-    incompatibleWith: ['service-plus-60m'],
+    incompatibleWith: ['service-plus-60m', 'warranty-plus', 'lease-plus-36m', 'lease-plus-60m'],
   },
   {
     id: 'service-plus-60m',
@@ -38,7 +39,7 @@ export const sharedServices: ServiceOption[] = [
     badge: 'recommended',
     duration: '60 maanden',
     billing: 'once',
-    incompatibleWith: ['service-plus-36m'],
+    incompatibleWith: ['service-plus-36m', 'warranty-plus', 'lease-plus-36m', 'lease-plus-60m'],
   },
 
   // ── Lease ───────────────────────────────────────────────────────
@@ -52,7 +53,7 @@ export const sharedServices: ServiceOption[] = [
     category: 'lease',
     duration: '36 maanden',
     billing: 'monthly',
-    incompatibleWith: ['lease-plus-60m'],
+    incompatibleWith: ['lease-plus-60m', 'warranty-plus', 'service-plus-36m', 'service-plus-60m'],
   },
   {
     id: 'lease-plus-60m',
@@ -65,7 +66,7 @@ export const sharedServices: ServiceOption[] = [
     badge: 'popular',
     duration: '60 maanden',
     billing: 'monthly',
-    incompatibleWith: ['lease-plus-36m'],
+    incompatibleWith: ['lease-plus-36m', 'warranty-plus', 'service-plus-36m', 'service-plus-60m'],
   },
 
   // ── Installatie ─────────────────────────────────────────────────

@@ -10,7 +10,7 @@ const COMPARE_ROWS: {
   label: string;
   sub?: string;
   warranty: boolean | 'required';
-  service: boolean;
+  service: boolean | 'required';
   lease: boolean;
 }[] = [
   {
@@ -30,8 +30,8 @@ const COMPARE_ROWS: {
   },
   {
     label: 'Installatie',
-    sub: 'Dient uitgevoerd te worden conform algemene voorwaarden',
-    warranty: false, service: false, lease: true,
+    sub: 'Dient uitgevoerd te worden conform algemene voorwaarden. Niet inbegrepen, maar vereist voor geldige garantie.',
+    warranty: 'required', service: 'required', lease: true,
   },
   {
     label: 'Product + verzekering',
@@ -100,7 +100,7 @@ function ServiceCompare() {
                     {row.sub && <span className="cfg-svc-compare__sub">{row.sub}</span>}
                   </td>
                   <td>{row.warranty === true ? <Check /> : row.warranty === 'required' ? <Required /> : <Dash />}</td>
-                  <td>{row.service ? <Check /> : <Dash />}</td>
+                  <td>{row.service === true ? <Check /> : row.service === 'required' ? <Required /> : <Dash />}</td>
                   <td>{row.lease ? <Check /> : <Dash />}</td>
                 </tr>
               ))}
