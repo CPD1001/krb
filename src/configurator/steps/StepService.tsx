@@ -163,8 +163,8 @@ export function StepService() {
         )}
 
         <OptionGroup
-          title="Garantie"
-          subtitle="Bescherm uw investering"
+          title="Warranty Plus"
+          subtitle="Verlengde garantie met jaarlijks onderhoud"
           options={services.filter(s => s.category === 'warranty')}
           selectedIds={selectedIds}
           mode="checkbox"
@@ -172,7 +172,25 @@ export function StepService() {
         />
 
         <OptionGroup
-          title="Bezorging & Installatie"
+          title="Service Plus"
+          subtitle="Volledig ontzorgd onderhoudscontract"
+          options={services.filter(s => s.category === 'service-contract')}
+          selectedIds={selectedIds}
+          mode="checkbox"
+          onSelect={(opt) => toggleService(opt as ServiceOption)}
+        />
+
+        <OptionGroup
+          title="Lease Plus"
+          subtitle="Alles-in-één: machine, onderhoud en verzekering"
+          options={services.filter(s => s.category === 'lease')}
+          selectedIds={selectedIds}
+          mode="checkbox"
+          onSelect={(opt) => toggleService(opt as ServiceOption)}
+        />
+
+        <OptionGroup
+          title="Installatie"
           subtitle="Laat het aan onze specialisten over"
           options={services.filter(s => ['delivery', 'installation', 'training'].includes(s.category))}
           selectedIds={selectedIds}
