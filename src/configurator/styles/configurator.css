@@ -1232,9 +1232,8 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--cfg-space-xl);
-  background: rgba(10, 10, 10, 0.95);
-  backdrop-filter: blur(20px);
-  border-top: 1px solid var(--cfg-color-border);
+  background: #283B5F;
+  border-top: none;
 }
 
 .cfg-sticky-bar__left {
@@ -1246,20 +1245,20 @@ body {
 
 .cfg-sticky-bar__progress-label {
   font-size: var(--cfg-font-size-xs);
-  color: var(--cfg-color-text-muted);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .cfg-sticky-bar__progress-track {
   width: 120px;
   height: 3px;
-  background: var(--cfg-color-border);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 2px;
   overflow: hidden;
 }
 
 .cfg-sticky-bar__progress-fill {
   height: 100%;
-  background: var(--cfg-color-accent);
+  background: #fff;
   border-radius: 2px;
   transition: width var(--cfg-transition-slow);
 }
@@ -1276,7 +1275,7 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--cfg-color-text);
+  color: #fff;
   font-family: var(--cfg-font);
   padding: var(--cfg-space-xs) var(--cfg-space-md);
   border-radius: var(--cfg-radius-sm);
@@ -1284,12 +1283,12 @@ body {
 }
 
 .cfg-sticky-bar__price-btn:hover {
-  background: var(--cfg-color-surface);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .cfg-sticky-bar__price-label {
   font-size: var(--cfg-font-size-xs);
-  color: var(--cfg-color-text-muted);
+  color: rgba(255, 255, 255, 0.6);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -1298,6 +1297,7 @@ body {
   font-size: var(--cfg-font-size-xl);
   font-weight: 700;
   letter-spacing: -0.02em;
+  color: #fff;
   display: flex;
   align-items: baseline;
   gap: 0.2rem;
@@ -1307,12 +1307,12 @@ body {
   font-size: var(--cfg-font-size-sm);
   font-weight: 500;
   letter-spacing: 0;
-  color: var(--cfg-color-text-secondary);
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .cfg-sticky-bar__savings {
   font-size: var(--cfg-font-size-xs);
-  color: var(--cfg-color-success);
+  color: #6ee7a0;
   font-weight: 600;
 }
 
@@ -1328,31 +1328,32 @@ body {
   align-items: center;
   gap: var(--cfg-space-sm);
   padding: var(--cfg-space-sm) var(--cfg-space-xl);
-  background: var(--cfg-color-accent);
-  color: white;
+  background: #fff;
+  color: #283B5F;
   border: none;
   border-radius: var(--cfg-radius-sm);
   font-family: var(--cfg-font);
   font-size: var(--cfg-font-size-base);
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all var(--cfg-transition);
   white-space: nowrap;
 }
 
 .cfg-sticky-bar__cta:hover {
-  background: var(--cfg-color-accent-hover);
+  background: rgba(255, 255, 255, 0.88);
   transform: translateY(-1px);
 }
 
 .cfg-sticky-bar__cta--primary {
-  background: var(--cfg-color-success);
+  background: #fff;
+  color: #283B5F;
   padding: var(--cfg-space-md) var(--cfg-space-2xl);
   font-size: var(--cfg-font-size-lg);
 }
 
 .cfg-sticky-bar__cta--primary:hover {
-  background: #3ad764;
+  background: rgba(255, 255, 255, 0.88);
 }
 
 /* ─── Price Overlay ───────────────────────────────────────────── */
