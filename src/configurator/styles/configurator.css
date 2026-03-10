@@ -1010,6 +1010,124 @@ body {
   color: var(--cfg-color-text);
 }
 
+/* ─── Service Comparison ──────────────────────────────────────── */
+
+.cfg-svc-compare {
+  border: 1px solid var(--cfg-color-border);
+  border-radius: var(--cfg-radius-md);
+  overflow: hidden;
+  margin-bottom: var(--cfg-space-lg);
+}
+
+.cfg-svc-compare__toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem var(--cfg-space-md);
+  background: var(--cfg-color-bg-card);
+  border: none;
+  cursor: pointer;
+  font-size: var(--cfg-font-size-sm);
+  font-weight: 600;
+  color: var(--cfg-color-accent);
+  text-align: left;
+  gap: 0.5rem;
+  transition: background var(--cfg-transition);
+}
+.cfg-svc-compare__toggle:hover {
+  background: var(--cfg-color-bg-card-hover);
+}
+
+.cfg-svc-compare__body {
+  border-top: 1px solid var(--cfg-color-border);
+  background: var(--cfg-color-bg-card);
+}
+
+.cfg-svc-compare__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--cfg-font-size-sm);
+}
+
+.cfg-svc-compare__table thead tr {
+  background: var(--cfg-color-surface);
+}
+
+.cfg-svc-compare__table thead th {
+  padding: 0.625rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cfg-color-text-secondary);
+  text-align: center;
+}
+
+.cfg-svc-compare__table thead th:first-child {
+  text-align: left;
+}
+
+.cfg-svc-compare__table tbody tr {
+  border-top: 1px solid var(--cfg-color-border);
+}
+
+.cfg-svc-compare__table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.cfg-svc-compare__table tbody td {
+  padding: 0.75rem;
+  vertical-align: top;
+  text-align: center;
+}
+
+.cfg-svc-compare__table tbody td:first-child {
+  text-align: left;
+}
+
+.cfg-svc-compare__table tbody td svg,
+.cfg-svc-compare__dash {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.cfg-svc-compare__dash {
+  color: var(--cfg-color-border-hover);
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.cfg-svc-compare__feat {
+  display: block;
+  font-weight: 500;
+  color: var(--cfg-color-text);
+  line-height: 1.35;
+}
+
+.cfg-svc-compare__sub {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--cfg-color-text-muted);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.cfg-svc-compare__note {
+  display: flex;
+  gap: 0.4rem;
+  align-items: flex-start;
+  padding: 0.625rem 0.875rem;
+  border-top: 1px solid var(--cfg-color-border);
+  font-size: 0.75rem;
+  color: var(--cfg-color-text-muted);
+  background: var(--cfg-color-surface);
+  line-height: 1.45;
+}
+
 /* ─── Tip Callout ─────────────────────────────────────────────── */
 
 .cfg-step__tip {
