@@ -221,6 +221,84 @@
   border: 1.5px solid var(--adv-accent);
 }
 
+/* ─── Multi-brand result cards ───────────────────────────────── */
+.adv-brand-recs {
+  display: grid;
+  gap: 1rem;
+  margin: 0.5rem 0 0.25rem;
+}
+
+.adv-brand-rec {
+  background: var(--cfg-color-bg-card, #fff);
+  border: 1.5px solid var(--cfg-color-border, #e2e2e2);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.adv-brand-rec__name {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cfg-color-text-muted, #888);
+  margin: 0;
+}
+
+.adv-brand-rec__model {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.adv-brand-rec__highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.adv-brand-rec__highlights li {
+  font-size: 0.8375rem;
+  color: var(--cfg-color-text-secondary, #555);
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.adv-brand-rec__highlights li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--adv-accent);
+}
+
+.adv-brand-rec__price {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.adv-brand-rec__cta {
+  display: block;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity 0.2s, transform 0.15s;
+  margin-top: 0.25rem;
+}
+
+.adv-brand-rec__cta:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
 /* ─── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 540px) {
   .adv-cards--2col { grid-template-columns: 1fr; }

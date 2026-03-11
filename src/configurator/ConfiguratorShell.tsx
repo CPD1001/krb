@@ -4,6 +4,7 @@ import { ProgressBar } from './components/ProgressBar';
 import { ProductVisual } from './components/ProductVisual';
 import { StickyPriceBar } from './components/StickyPriceBar';
 import { StepNavigation } from './components/StepNavigation';
+import type { BrandColors } from '../advisor/brands';
 
 // Lazy load step components for performance
 const StepMachine = lazy(() => import('./steps/StepMachine').then(m => ({ default: m.StepMachine })));
@@ -22,8 +23,24 @@ function StepLoader() {
   );
 }
 
-export function ConfiguratorShell({ onRestart }: { onRestart?: () => void }) {
+export function ConfiguratorShell({
+  onRestart,
+  brandColors,
+}: {
+  onRestart?: () => void;
+  brandColors?: BrandColors;
+}) {
   const { state } = useConfigurator();
+
+  const brandStyle = brandColors ? ({
+    '--cfg-color-accent':         brandColors.accent,
+    '--cfg-color-accent-light':   brandColors.accentLight,
+    '--cfg-color-accent-hover':   brandColors.accentHover,
+    '--cfg-color-accent-glow':    brandColors.accentGlow,
+    '--cfg-color-bg-card-hover':  brandColors.cardHover,
+    '--cfg-color-bg-card-selected': brandColors.cardSelected,
+    '--cfg-color-border-selected':  brandColors.borderSelected,
+  } as React.CSSProperties) : undefined;
 
   const renderStep = () => {
     switch (state.currentStep) {
@@ -38,7 +55,7 @@ export function ConfiguratorShell({ onRestart }: { onRestart?: () => void }) {
   };
 
   return (
-    <div className="cfg-shell">
+    <div className="cfg-shell" style={brandStyle}>
       <header className="cfg-header">
         <div className="cfg-header__logo">
           <img

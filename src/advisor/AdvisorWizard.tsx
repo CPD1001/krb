@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import type { ProductConfigData } from '../configurator/types/configurator';
 import {
   AdvisorAnswers, AreaBucket, SlopeBucket,
-  Recommendation, getRecommendation,
+  Recommendation, getRecommendationForBrand,
 } from './advisor-engine';
-import { husqvarnaCatalog } from '../configurator/data/husqvarna-catalog';
+import { BRANDS, BrandDef } from './brands';
 import { formatPrice } from '../configurator/engine/pricing';
 import {
   IconGardenXS, IconGardenSM, IconGardenMD, IconGardenLG, IconGardenXL, IconGardenXXL,
@@ -16,7 +16,7 @@ import './advisor.css';
 type Step = 'area' | 'slope' | 'smart' | 'wildlife' | 'result';
 
 interface Props {
-  onComplete: (productData: ProductConfigData) => void;
+  onComplete: (productData: ProductConfigData, brand: BrandDef) => void;
   onSkip:     () => void;
 }
 
@@ -25,11 +25,13 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
   const [answers, setAnswers] = useState<AdvisorAnswers>({
     area: null, slope: null, wantsSmart: null, wantsWildlife: null,
   });
-  const [rec, setRec] = useState<Recommendation | null>(null);
+  const [recs, setRecs] = useState<Recommendation[]>([]);
 
   function finalize(finalAnswers: AdvisorAnswers) {
-    const result = getRecommendation(finalAnswers);
-    setRec(result);
+    const results = BRANDS
+      .map(brand => getRecommendationForBrand(finalAnswers, brand))
+      .filter((r): r is Recommendation => r !== null);
+    setRecs(results);
     setStep('result');
   }
 
@@ -102,6 +104,7 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
                     key={opt.id}
                     label={opt.label}
                     sub={opt.sub}
+                    icon={opt.icon}
                     onClick={() => selectArea(opt.id as AreaBucket)}
                   />
                 ))}
@@ -129,7 +132,7 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
           {step === 'smart' && (
             <AdvisorStep title="Wilt u app-bediening via WiFi?" sub="Stap 3 van 4">
               <p className="adv-step__hint">
-                Met WiFi + 4G bedient u uw maaier via de Automower Connect-app. Maaiplan instellen, locatie volgen en meldingen ontvangen.
+                Met WiFi + 4G bedient u uw maaier via de app. Maaiplan instellen, locatie volgen en meldingen ontvangen.
               </p>
               <div className="adv-cards adv-cards--2col">
                 <AdvCard label="Ja, met app" sub="WiFi + 4G bediening" icon={<IconWifi />} onClick={() => selectSmart(true)} />
@@ -152,15 +155,15 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
             </AdvisorStep>
           )}
 
-          {step === 'result' && rec && (
+          {step === 'result' && recs.length > 0 && (
             <ResultScreen
-              rec={rec}
-              onConfigure={() => onComplete(rec.productData)}
+              recs={recs}
+              onSelectBrand={(productData, brand) => onComplete(productData, brand)}
               onBack={() => setStep('wildlife')}
             />
           )}
 
-          {step === 'result' && !rec && (
+          {step === 'result' && recs.length === 0 && (
             <div className="adv-result adv-result--contact">
               <p className="adv-result__tag">Persoonlijk advies</p>
               <h2 className="adv-result__model">Wij adviseren u graag</h2>
@@ -184,43 +187,91 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
 // ─── Result screen ────────────────────────────────────────────────
 
 function ResultScreen({
-  rec, onConfigure, onBack,
+  recs, onSelectBrand, onBack,
 }: {
-  rec: Recommendation;
-  onConfigure: () => void;
+  recs: Recommendation[];
+  onSelectBrand: (productData: ProductConfigData, brand: BrandDef) => void;
   onBack: () => void;
 }) {
-  const machine = husqvarnaCatalog.find(m => m.id === rec.modelId)!;
+  // Single brand: show detailed recommendation with branded CTA
+  if (recs.length === 1) {
+    const rec = recs[0];
+    const machine = rec.brand.catalog.find(m => m.id === rec.modelId)!;
 
+    return (
+      <div className="adv-result">
+        <p className="adv-result__tag">Ons advies</p>
+        <h2 className="adv-result__model">{machine.title}</h2>
+        <p className="adv-result__rationale">{rec.rationale}</p>
+
+        <ul className="adv-result__highlights">
+          {rec.highlights.map(h => <li key={h}>{h}</li>)}
+        </ul>
+
+        {rec.tradeoffs.length > 0 && (
+          <div className="adv-result__tradeoffs">
+            {rec.tradeoffs.map(t => (
+              <p key={t} className="adv-result__tradeoff">{t}</p>
+            ))}
+          </div>
+        )}
+
+        <div className="adv-result__price">
+          <span>Vanaf</span>
+          <strong>{formatPrice(machine.price)}</strong>
+          {machine.subtitle && (
+            <span className="adv-result__msrp">{machine.subtitle}</span>
+          )}
+        </div>
+
+        <button
+          className="adv-result__cta"
+          style={{ background: rec.brand.colors.accent, color: '#fff' }}
+          onClick={() => onSelectBrand(rec.productData, rec.brand)}
+        >
+          Configureer mijn maaier →
+        </button>
+
+        <BackBtn onClick={onBack} />
+      </div>
+    );
+  }
+
+  // Multiple brands: show brand selection cards
   return (
     <div className="adv-result">
       <p className="adv-result__tag">Ons advies</p>
-      <h2 className="adv-result__model">{machine.title}</h2>
-      <p className="adv-result__rationale">{rec.rationale}</p>
+      <h2 className="adv-result__model" style={{ fontSize: '1.5rem' }}>
+        Passende maaiers voor uw tuin
+      </h2>
+      <p className="adv-result__rationale">
+        Op basis van uw wensen adviseren wij de volgende modellen. Kies uw voorkeursmerk om verder te configureren.
+      </p>
 
-      <ul className="adv-result__highlights">
-        {rec.highlights.map(h => <li key={h}>{h}</li>)}
-      </ul>
-
-      {rec.tradeoffs.length > 0 && (
-        <div className="adv-result__tradeoffs">
-          {rec.tradeoffs.map(t => (
-            <p key={t} className="adv-result__tradeoff">{t}</p>
-          ))}
-        </div>
-      )}
-
-      <div className="adv-result__price">
-        <span>Vanaf</span>
-        <strong>{formatPrice(machine.price)}</strong>
-        {machine.subtitle && (
-          <span className="adv-result__msrp">{machine.subtitle}</span>
-        )}
+      <div className="adv-brand-recs">
+        {recs.map(rec => {
+          const machine = rec.brand.catalog.find(m => m.id === rec.modelId)!;
+          return (
+            <div key={rec.brand.id} className="adv-brand-rec">
+              <p className="adv-brand-rec__name">{rec.brand.name}</p>
+              <p className="adv-brand-rec__model">{machine.title}</p>
+              <ul className="adv-brand-rec__highlights">
+                {rec.highlights.slice(0, 3).map(h => <li key={h}>{h}</li>)}
+              </ul>
+              <div className="adv-brand-rec__price">
+                <strong>{formatPrice(machine.price)}</strong>
+              </div>
+              <button
+                className="adv-brand-rec__cta"
+                style={{ background: rec.brand.colors.accent }}
+                onClick={() => onSelectBrand(rec.productData, rec.brand)}
+              >
+                Kies {rec.brand.name} →
+              </button>
+            </div>
+          );
+        })}
       </div>
-
-      <button className="adv-result__cta" onClick={onConfigure}>
-        Configureer mijn maaier →
-      </button>
 
       <BackBtn onClick={onBack} />
     </div>

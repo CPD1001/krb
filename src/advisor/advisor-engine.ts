@@ -1,7 +1,7 @@
-import type { ProductConfigData, AccessoryOption, ServiceOption } from '../configurator/types/configurator';
-import { husqvarnaCatalog, MODEL_SPECS, type ModelSpec } from '../configurator/data/husqvarna-catalog';
-import { getAccessoriesForModel } from '../configurator/data/shared-accessories';
-import { sharedServices, suggestInstallationLevel } from '../configurator/data/shared-services';
+import type { ProductConfigData, AccessoryOption, ServiceOption, MachineOption } from '../configurator/types/configurator';
+import type { ModelSpec } from '../configurator/data/husqvarna-catalog';
+import { suggestInstallationLevel } from '../configurator/data/shared-services';
+import type { BrandDef } from './brands';
 
 // ─── Advisor answer types ─────────────────────────────────────────
 
@@ -35,31 +35,35 @@ const SLOPE_PCT: Record<SlopeBucket, number> = {
 // ─── Recommendation result ────────────────────────────────────────
 
 export interface Recommendation {
+  brand:                BrandDef;
   modelId:              string;
   productData:          ProductConfigData;
   rationale:            string;
   highlights:           string[];
-  tradeoffs:            string[];   // noted if a preference couldn't be met
-  suggestedAccessories: string[];   // IDs
-  suggestedInstallId:   string;     // service option ID
+  tradeoffs:            string[];
+  suggestedAccessories: string[];
+  suggestedInstallId:   string;
 }
 
-// ─── Core algorithm ───────────────────────────────────────────────
+// ─── Per-brand recommendation ─────────────────────────────────────
 
-export function getRecommendation(answers: AdvisorAnswers): Recommendation | null {
+export function getRecommendationForBrand(
+  answers: AdvisorAnswers,
+  brand: BrandDef,
+): Recommendation | null {
   if (!answers.area || !answers.slope) return null;
 
-  const requiredAreaM2  = AREA_M2[answers.area];
+  const requiredAreaM2   = AREA_M2[answers.area];
   const requiredSlopePct = SLOPE_PCT[answers.slope];
 
-  // Step 1: Hard filter — area + slope (non-negotiable)
-  let candidates = MODEL_SPECS.filter(
+  // Step 1: Hard filter — area + slope
+  let candidates = brand.modelSpecs.filter(
     m => m.areaSysM2 >= requiredAreaM2 && m.slopeMax >= requiredSlopePct
   );
 
   if (candidates.length === 0) {
-    // Fallback: relax area, keep slope (edge case for very large steep gardens)
-    candidates = MODEL_SPECS.filter(m => m.slopeMax >= requiredSlopePct);
+    // Relax area, keep slope
+    candidates = brand.modelSpecs.filter(m => m.slopeMax >= requiredSlopePct);
     if (candidates.length === 0) return null;
   }
 
@@ -74,7 +78,6 @@ export function getRecommendation(answers: AdvisorAnswers): Recommendation | nul
     if (filtered.length > 0) {
       candidates = filtered;
     } else if (answers.wantsSmart === false) {
-      // No basic-BT models that fit constraints → escalate to smart
       tradeoffs.push(
         'Er zijn geen eenvoudige modellen die aan uw terrein- en oppervlaktewensen voldoen. Wij adviseren een NERA-model met app-bediening.'
       );
@@ -88,16 +91,16 @@ export function getRecommendation(answers: AdvisorAnswers): Recommendation | nul
       candidates = filtered;
     } else {
       tradeoffs.push(
-        'Wildlife-detectie is niet beschikbaar voor modellen die passen bij uw hellingsvereisten. Overweeg de 435X AWD NERA of neem contact op voor advies.'
+        'Wildlife-detectie is niet beschikbaar voor modellen die passen bij uw hellingsvereisten. Neem contact op voor persoonlijk advies.'
       );
     }
   }
 
-  // Step 4: Pick cheapest model that satisfies all hard + soft constraints
+  // Step 4: Pick cheapest model that satisfies all constraints
   const sorted = [...candidates].sort((a, b) => a.price - b.price);
   const chosen: ModelSpec = sorted[0];
 
-  return buildRecommendation(chosen, answers, requiredSlopePct, tradeoffs);
+  return buildRecommendation(chosen, answers, requiredSlopePct, tradeoffs, brand);
 }
 
 // ─── Build full ProductConfigData for chosen model ────────────────
@@ -106,10 +109,11 @@ function buildRecommendation(
   spec: ModelSpec,
   answers: AdvisorAnswers,
   slopePct: number,
-  tradeoffs: string[]
+  tradeoffs: string[],
+  brand: BrandDef,
 ): Recommendation {
-  const machine = husqvarnaCatalog.find(m => m.id === spec.id)!;
-  const accessories = getAccessoriesForModel(spec.id);
+  const machine = brand.catalog.find(m => m.id === spec.id)!;
+  const accessories = brand.getAccessories(spec.id);
 
   // Pre-select accessories
   const suggestedAccessories: string[] = ['automower-house'];
@@ -122,7 +126,7 @@ function buildRecommendation(
 
   // Only expose the suggested installation level + zelf-installeren
   const installationIds = ['installatie-level-1', 'installatie-level-2', 'installatie-level-3'];
-  const services = sharedServices.filter(
+  const services = brand.services.filter(
     s => !installationIds.includes(s.id) || s.id === suggestedInstallId
   );
 
@@ -153,10 +157,11 @@ function buildRecommendation(
   };
 
   return {
+    brand,
     modelId: spec.id,
     productData,
-    rationale:  buildRationale(spec, answers),
-    highlights: buildHighlights(spec, answers),
+    rationale:  buildRationale(spec, answers, brand.catalog),
+    highlights: buildHighlights(spec, answers, brand.catalog),
     tradeoffs,
     suggestedAccessories,
     suggestedInstallId,
@@ -165,7 +170,7 @@ function buildRecommendation(
 
 // ─── Copy helpers ─────────────────────────────────────────────────
 
-function buildRationale(spec: ModelSpec, answers: AdvisorAnswers): string {
+function buildRationale(spec: ModelSpec, answers: AdvisorAnswers, catalog: MachineOption[]): string {
   const areaLabels: Record<AreaBucket, string> = {
     xs:  'een gazon tot 500 m²',
     sm:  'een gazon van 500 tot 1.000 m²',
@@ -183,12 +188,13 @@ function buildRationale(spec: ModelSpec, answers: AdvisorAnswers): string {
 
   const area  = answers.area  ? areaLabels[answers.area]   : 'uw gazon';
   const slope = answers.slope ? slopeLabels[answers.slope] : '';
+  const machine = catalog.find(m => m.id === spec.id);
 
-  return `Op basis van ${area}${slope ? ` op ${slope}` : ''} is de ${husqvarnaCatalog.find(m => m.id === spec.id)?.title} de ideale keuze.`;
+  return `Op basis van ${area}${slope ? ` op ${slope}` : ''} is de ${machine?.title ?? spec.id} de ideale keuze.`;
 }
 
-function buildHighlights(spec: ModelSpec, answers: AdvisorAnswers): string[] {
-  const machine = husqvarnaCatalog.find(m => m.id === spec.id)!;
+function buildHighlights(spec: ModelSpec, answers: AdvisorAnswers, catalog: MachineOption[]): string[] {
+  const machine = catalog.find(m => m.id === spec.id)!;
   const list: string[] = [];
 
   const areaSpec = machine.keySpecs.find(s => s.label === 'Maaioppervlak');
@@ -198,7 +204,7 @@ function buildHighlights(spec: ModelSpec, answers: AdvisorAnswers): string[] {
   if (slopeSpec) list.push(`Hellingcapaciteit: ${slopeSpec.value}`);
 
   if (spec.wildlife) list.push('AI wildlife-detectie — stopt automatisch voor dieren');
-  if (spec.smart)    list.push('WiFi + 4G app-bediening via Automower Connect');
+  if (spec.smart)    list.push('WiFi + 4G app-bediening');
   if (spec.id === '435x-awd-nera') list.push('Vierwielaandrijving (AWD) voor maximale tractie');
 
   const noiseSpec = machine.keySpecs.find(s => s.label === 'Geluidsniveau');
