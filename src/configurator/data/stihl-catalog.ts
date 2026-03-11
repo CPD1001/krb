@@ -168,14 +168,14 @@ export const stihlCatalog: MachineOption[] = [
 // ─── Model specs (used by advisor engine) ────────────────────────
 
 export const STIHL_MODEL_SPECS: ModelSpec[] = [
-  { id: 'imow-3',     areaSysM2:  500, slopeMax: 40, smart: true, wildlife: false, wireless: false, price: 79900  },
-  { id: 'imow-3-evo', areaSysM2:  500, slopeMax: 45, smart: true, wildlife: false, wireless: false, price: 89900  },
-  { id: 'imow-4',     areaSysM2: 1000, slopeMax: 40, smart: true, wildlife: false, wireless: false, price: 109900 },
-  { id: 'imow-4-evo', areaSysM2: 1000, slopeMax: 45, smart: true, wildlife: false, wireless: false, price: 119900 },
-  { id: 'imow-5',     areaSysM2: 1500, slopeMax: 40, smart: true, wildlife: false, wireless: false, price: 139900 },
-  { id: 'imow-5-evo', areaSysM2: 1500, slopeMax: 45, smart: true, wildlife: false, wireless: false, price: 149900 },
-  { id: 'imow-6',     areaSysM2: 3000, slopeMax: 40, smart: true, wildlife: false, wireless: false, price: 179900 },
-  { id: 'imow-6-evo', areaSysM2: 3000, slopeMax: 45, smart: true, wildlife: false, wireless: false, price: 199900 },
+  { id: 'imow-3',     areaSysM2:  500, slopeMax: 40, smart: true, wildlife: false, wireless: false, edgeCut: false, price: 79900  },
+  { id: 'imow-3-evo', areaSysM2:  500, slopeMax: 45, smart: true, wildlife: false, wireless: false, edgeCut: false, price: 89900  },
+  { id: 'imow-4',     areaSysM2: 1000, slopeMax: 40, smart: true, wildlife: false, wireless: false, edgeCut: false, price: 109900 },
+  { id: 'imow-4-evo', areaSysM2: 1000, slopeMax: 45, smart: true, wildlife: false, wireless: false, edgeCut: false, price: 119900 },
+  { id: 'imow-5',     areaSysM2: 1500, slopeMax: 40, smart: true, wildlife: false, wireless: false, edgeCut: false, price: 139900 },
+  { id: 'imow-5-evo', areaSysM2: 1500, slopeMax: 45, smart: true, wildlife: false, wireless: false, edgeCut: false, price: 149900 },
+  { id: 'imow-6',     areaSysM2: 3000, slopeMax: 40, smart: true, wildlife: false, wireless: false, edgeCut: false, price: 179900 },
+  { id: 'imow-6-evo', areaSysM2: 3000, slopeMax: 45, smart: true, wildlife: false, wireless: false, edgeCut: false, price: 199900 },
 ];
 
 // ─── Stihl accessories ────────────────────────────────────────────

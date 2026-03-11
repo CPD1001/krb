@@ -216,6 +216,7 @@ function buildHighlights(spec: ModelSpec, answers: AdvisorAnswers, catalog: Mach
   const slopeSpec = machine.keySpecs.find(s => s.label === 'Max. helling');
   if (slopeSpec) list.push(`Hellingcapaciteit: ${slopeSpec.value}`);
 
+  if (spec.edgeCut)  list.push('EdgeCut — maait tot aan de rand, nauwelijks trimmen nodig');
   if (spec.wildlife) list.push('AI wildlife-detectie — stopt automatisch voor dieren');
   if (spec.smart)    list.push('WiFi + 4G app-bediening');
   if (spec.id === '435x-awd-nera') list.push('Vierwielaandrijving (AWD) voor maximale tractie');
