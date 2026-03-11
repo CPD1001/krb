@@ -14,10 +14,10 @@ export const stihlCatalog: MachineOption[] = [
     description: 'Compacte robotmaaier voor gazons tot 500 m². App-bediening via WiFi. Ideaal voor vlakke tot licht hellende terreinen.',
     price: 79900,
     category: 'Robotmaaier',
-    heroImage: 'https://cdn.shopify.com/s/files/1/0790/7636/0505/files/StihliMOW3.0Robotmaaier_2_3cd1327f-1ae6-4052-9757-36b8021b9458.png?v=1773235446',
+    heroImage: 'https://cdn.shopify.com/s/files/1/0790/7636/0505/files/Ontwerp_Zonder_Titel_-_1_-_Bewerkt.png?v=1773236415',
     galleryImages: [
-      'https://cdn.shopify.com/s/files/1/0790/7636/0505/files/StihliMOW3.0Robotmaaier_387e75c2-61db-4883-831e-2fad07d60199.png?v=1773235446',
-      'https://cdn.shopify.com/s/files/1/0790/7636/0505/files/Stihl_iMOW_3.0_Robotmaaier_8_321923f5-ee06-4c1f-89d8-3e1e475a6759.png?v=1773235446',
+      'https://cdn.shopify.com/s/files/1/0790/7636/0505/files/177b7327-8a88-4157-ad32-8fe9bc071614.png?v=1773236452',
+      'https://cdn.shopify.com/s/files/1/0790/7636/0505/files/bfe065a4-4851-448d-a1df-09d450ee6da3.png?v=1773236493',
     ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 500 m²' },
