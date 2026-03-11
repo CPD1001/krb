@@ -240,7 +240,7 @@ export const husqvarnaCatalog: MachineOption[] = [
       { label: 'Max. helling',      value: '70% — AWD' },
       { label: 'Geluidsniveau',     value: '60 dB(A)' },
       { label: 'Aandrijving',       value: '4WD' },
-      { label: 'Wildlife detectie', value: '✓ AI-camera' },
+      { label: 'Objectdetectie',    value: '✓ Detectie & ontwijking' },
       { label: 'Connectiviteit',    value: 'WiFi + 4G + BT' },
     ],
   },
@@ -269,5 +269,5 @@ export const MODEL_SPECS: ModelSpec[] = [
   { id: '410ve-nera',    areaSysM2: 1500, slopeMax: 30, smart: true,  wildlife: true,  wireless: true,  edgeCut: true,  price: 319900 },
   { id: '430v-nera',     areaSysM2: 4800, slopeMax: 50, smart: true,  wildlife: true,  wireless: true,  edgeCut: false, price: 429900 },
   { id: '450v-nera',     areaSysM2: 7500, slopeMax: 50, smart: true,  wildlife: true,  wireless: true,  edgeCut: false, price: 549900 },
-  { id: '435x-awd-nera', areaSysM2: 5000, slopeMax: 70, smart: true,  wildlife: true,  wireless: true,  edgeCut: false, price: 409900 },
+  { id: '435x-awd-nera', areaSysM2: 5000, slopeMax: 70, smart: true,  wildlife: false, wireless: true,  edgeCut: false, price: 409900 },
 ];
