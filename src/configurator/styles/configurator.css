@@ -111,7 +111,7 @@ body {
   justify-content: space-between;
   height: var(--cfg-header-height);
   padding: 0 var(--cfg-space-xl);
-  background: #283B5F;
+  background: var(--cfg-color-accent, #283B5F);
   border-bottom: none;
 }
 
@@ -1232,7 +1232,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--cfg-space-xl);
-  background: #283B5F;
+  background: var(--cfg-color-accent, #283B5F);
   border-top: none;
 }
 
@@ -1329,7 +1329,7 @@ body {
   gap: var(--cfg-space-sm);
   padding: var(--cfg-space-sm) var(--cfg-space-xl);
   background: #fff;
-  color: #283B5F;
+  color: var(--cfg-color-accent, #283B5F);
   border: none;
   border-radius: var(--cfg-radius-sm);
   font-family: var(--cfg-font);
@@ -1347,7 +1347,7 @@ body {
 
 .cfg-sticky-bar__cta--primary {
   background: #fff;
-  color: #283B5F;
+  color: var(--cfg-color-accent, #283B5F);
   padding: var(--cfg-space-md) var(--cfg-space-2xl);
   font-size: var(--cfg-font-size-lg);
 }

@@ -3,6 +3,9 @@ import type { ModelSpec } from '../configurator/data/husqvarna-catalog';
 import { husqvarnaCatalog, MODEL_SPECS as HUSQVARNA_SPECS } from '../configurator/data/husqvarna-catalog';
 import { getAccessoriesForModel } from '../configurator/data/shared-accessories';
 import { sharedServices } from '../configurator/data/shared-services';
+
+// Installation-only services for brands without warranty/service/lease contracts
+const installationOnlyServices = sharedServices.filter(s => s.category === 'installation');
 import { stihlCatalog, STIHL_MODEL_SPECS, stihlAccessories } from '../configurator/data/stihl-catalog';
 
 // ─── Brand theme ──────────────────────────────────────────────────
@@ -68,7 +71,7 @@ export const stihlBrand: BrandDef = {
   modelSpecs:     STIHL_MODEL_SPECS,
   catalog:        stihlCatalog,
   getAccessories: () => stihlAccessories,
-  services:       sharedServices,
+  services:       installationOnlyServices,
 };
 
 // ─── All active brands ────────────────────────────────────────────

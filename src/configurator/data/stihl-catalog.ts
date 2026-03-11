@@ -1,6 +1,8 @@
 import type { MachineOption, AccessoryOption } from '../types/configurator';
 import type { ModelSpec } from './husqvarna-catalog';
 
+const CDN = 'https://www.stihl.nl/content/dam/stihl/media/pim';
+
 // ─── Stihl iMOW catalog ───────────────────────────────────────────
 // Prices are indicative — update to actual Keizers-prices
 
@@ -12,8 +14,12 @@ export const stihlCatalog: MachineOption[] = [
     description: 'Compacte robotmaaier voor gazons tot 500 m². App-bediening via WiFi. Ideaal voor vlakke tot licht hellende terreinen.',
     price: 79900,
     category: 'Robotmaaier',
-    heroImage: '',
-    galleryImages: [],
+    heroImage: `${CDN}/124405.jpg`,
+    galleryImages: [
+      `${CDN}/124406.jpg`,
+      `${CDN}/124411.jpg`,
+      `${CDN}/126429.jpg`,
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 500 m²' },
       { label: 'Max. helling',   value: '40%' },
@@ -28,8 +34,12 @@ export const stihlCatalog: MachineOption[] = [
     price: 89900,
     category: 'Robotmaaier',
     badge: 'new',
-    heroImage: '',
-    galleryImages: [],
+    heroImage: `${CDN}/124619.jpg`,
+    galleryImages: [
+      `${CDN}/124621.jpg`,
+      `${CDN}/124429.jpg`,
+      `${CDN}/126492.jpg`,
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 500 m²' },
       { label: 'Max. helling',   value: '45%' },
@@ -40,11 +50,15 @@ export const stihlCatalog: MachineOption[] = [
     id: 'imow-4',
     title: 'STIHL iMOW 4',
     subtitle: 'Keizers-prijs — neem contact op',
-    description: 'Robotmaaier voor middelgrote gazons tot 1.000 m². Inclusief app-bediening en zoneenbeheer.',
+    description: 'Robotmaaier voor middelgrote gazons tot 1.000 m². Inclusief app-bediening en zonenbeheer.',
     price: 109900,
     category: 'Robotmaaier',
-    heroImage: '',
-    galleryImages: [],
+    heroImage: `${CDN}/124416.jpg`,
+    galleryImages: [
+      `${CDN}/124418.jpg`,
+      `${CDN}/124421.jpg`,
+      `${CDN}/126493.jpg`,
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 1.000 m²' },
       { label: 'Max. helling',   value: '40%' },
@@ -59,8 +73,12 @@ export const stihlCatalog: MachineOption[] = [
     price: 119900,
     category: 'Robotmaaier',
     badge: 'new',
-    heroImage: '',
-    galleryImages: [],
+    heroImage: `${CDN}/124624.jpg`,
+    galleryImages: [
+      `${CDN}/124623.jpg`,
+      `${CDN}/124440.jpg`,
+      `${CDN}/126430.jpg`,
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 1.000 m²' },
       { label: 'Max. helling',   value: '45%' },
@@ -75,8 +93,12 @@ export const stihlCatalog: MachineOption[] = [
     price: 139900,
     category: 'Robotmaaier',
     badge: 'popular',
-    heroImage: '',
-    galleryImages: [],
+    heroImage: `${CDN}/95142.jpg`,
+    galleryImages: [
+      `${CDN}/95350.jpg`,
+      `${CDN}/95469.jpg`,
+      `${CDN}/95471.jpg`,
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 1.500 m²' },
       { label: 'Max. helling',   value: '40%' },
@@ -91,8 +113,12 @@ export const stihlCatalog: MachineOption[] = [
     price: 149900,
     category: 'Robotmaaier',
     badge: 'new',
-    heroImage: '',
-    galleryImages: [],
+    heroImage: `${CDN}/95146.jpg`,
+    galleryImages: [
+      `${CDN}/95143.jpg`,
+      `${CDN}/95150.jpg`,
+      `${CDN}/95149.jpg`,
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 1.500 m²' },
       { label: 'Max. helling',   value: '45%' },
@@ -106,8 +132,12 @@ export const stihlCatalog: MachineOption[] = [
     description: 'Topmodel voor grote tuinen tot 3.000 m². Meerdere zones, uitgebreide app-bediening en automatische planning.',
     price: 179900,
     category: 'Robotmaaier',
-    heroImage: '',
-    galleryImages: [],
+    heroImage: `${CDN}/95347.jpg`,
+    galleryImages: [
+      `${CDN}/95153.jpg`,
+      `${CDN}/95345.jpg`,
+      `${CDN}/95469.jpg`,
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 3.000 m²' },
       { label: 'Max. helling',   value: '40%' },
@@ -122,8 +152,12 @@ export const stihlCatalog: MachineOption[] = [
     price: 199900,
     category: 'Robotmaaier',
     badge: 'popular',
-    heroImage: '',
-    galleryImages: [],
+    heroImage: `${CDN}/95157.jpg`,
+    galleryImages: [
+      `${CDN}/95155.jpg`,
+      `${CDN}/95159.jpg`,
+      `${CDN}/95161.jpg`,
+    ],
     keySpecs: [
       { label: 'Maaioppervlak',  value: 'tot 3.000 m²' },
       { label: 'Max. helling',   value: '45%' },
