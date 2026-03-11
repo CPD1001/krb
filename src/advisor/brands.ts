@@ -3,6 +3,7 @@ import type { ModelSpec } from '../configurator/data/husqvarna-catalog';
 import { husqvarnaCatalog, MODEL_SPECS as HUSQVARNA_SPECS } from '../configurator/data/husqvarna-catalog';
 import { getAccessoriesForModel } from '../configurator/data/shared-accessories';
 import { sharedServices } from '../configurator/data/shared-services';
+import { stihlCatalog, STIHL_MODEL_SPECS, stihlAccessories } from '../configurator/data/stihl-catalog';
 
 // ─── Brand theme ──────────────────────────────────────────────────
 
@@ -49,7 +50,28 @@ export const husqvarnaBrand: BrandDef = {
   services:       sharedServices,
 };
 
+// ─── STIHL ────────────────────────────────────────────────────────
+// Pantone 165 / HKS 8 / RAL 2008
+
+export const stihlBrand: BrandDef = {
+  id:   'stihl',
+  name: 'STIHL',
+  colors: {
+    accent:         '#F47920',
+    accentLight:    '#F8A55C',
+    accentHover:    '#D96510',
+    accentGlow:     'rgba(244, 121, 32, 0.2)',
+    cardHover:      '#FFF4EC',
+    cardSelected:   '#FFE9D5',
+    borderSelected: '#F47920',
+  },
+  modelSpecs:     STIHL_MODEL_SPECS,
+  catalog:        stihlCatalog,
+  getAccessories: () => stihlAccessories,
+  services:       sharedServices,
+};
+
 // ─── All active brands ────────────────────────────────────────────
 // Add new brands here — they automatically appear in the advisor result
 
-export const BRANDS: BrandDef[] = [husqvarnaBrand];
+export const BRANDS: BrandDef[] = [husqvarnaBrand, stihlBrand];

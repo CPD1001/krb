@@ -1,0 +1,181 @@
+import type { MachineOption, AccessoryOption } from '../types/configurator';
+import type { ModelSpec } from './husqvarna-catalog';
+
+// ─── Stihl iMOW catalog ───────────────────────────────────────────
+// Prices are indicative — update to actual Keizers-prices
+
+export const stihlCatalog: MachineOption[] = [
+  {
+    id: 'imow-3',
+    title: 'STIHL iMOW 3',
+    subtitle: 'Keizers-prijs — neem contact op',
+    description: 'Compacte robotmaaier voor gazons tot 500 m². App-bediening via WiFi. Ideaal voor vlakke tot licht hellende terreinen.',
+    price: 79900,
+    category: 'Robotmaaier',
+    heroImage: '',
+    galleryImages: [],
+    keySpecs: [
+      { label: 'Maaioppervlak',  value: 'tot 500 m²' },
+      { label: 'Max. helling',   value: '40%' },
+      { label: 'Connectiviteit', value: 'WiFi-app' },
+    ],
+  },
+  {
+    id: 'imow-3-evo',
+    title: 'STIHL iMOW 3 EVO',
+    subtitle: 'Keizers-prijs — neem contact op',
+    description: 'Verbeterde EVO-versie van de iMOW 3, geschikt voor terreinen tot 45% helling. App-bediening via WiFi.',
+    price: 89900,
+    category: 'Robotmaaier',
+    badge: 'new',
+    heroImage: '',
+    galleryImages: [],
+    keySpecs: [
+      { label: 'Maaioppervlak',  value: 'tot 500 m²' },
+      { label: 'Max. helling',   value: '45%' },
+      { label: 'Connectiviteit', value: 'WiFi-app' },
+    ],
+  },
+  {
+    id: 'imow-4',
+    title: 'STIHL iMOW 4',
+    subtitle: 'Keizers-prijs — neem contact op',
+    description: 'Robotmaaier voor middelgrote gazons tot 1.000 m². Inclusief app-bediening en zoneenbeheer.',
+    price: 109900,
+    category: 'Robotmaaier',
+    heroImage: '',
+    galleryImages: [],
+    keySpecs: [
+      { label: 'Maaioppervlak',  value: 'tot 1.000 m²' },
+      { label: 'Max. helling',   value: '40%' },
+      { label: 'Connectiviteit', value: 'WiFi-app' },
+    ],
+  },
+  {
+    id: 'imow-4-evo',
+    title: 'STIHL iMOW 4 EVO',
+    subtitle: 'Keizers-prijs — neem contact op',
+    description: 'EVO-versie voor gazons tot 1.000 m² met verbeterde hellingcapaciteit tot 45%. WiFi-app inbegrepen.',
+    price: 119900,
+    category: 'Robotmaaier',
+    badge: 'new',
+    heroImage: '',
+    galleryImages: [],
+    keySpecs: [
+      { label: 'Maaioppervlak',  value: 'tot 1.000 m²' },
+      { label: 'Max. helling',   value: '45%' },
+      { label: 'Connectiviteit', value: 'WiFi-app' },
+    ],
+  },
+  {
+    id: 'imow-5',
+    title: 'STIHL iMOW 5',
+    subtitle: 'Keizers-prijs — neem contact op',
+    description: 'Krachtige robotmaaier voor grote gazons tot 1.500 m². App-bediening, zonenbeheer en seizoensplanning.',
+    price: 139900,
+    category: 'Robotmaaier',
+    badge: 'popular',
+    heroImage: '',
+    galleryImages: [],
+    keySpecs: [
+      { label: 'Maaioppervlak',  value: 'tot 1.500 m²' },
+      { label: 'Max. helling',   value: '40%' },
+      { label: 'Connectiviteit', value: 'WiFi-app' },
+    ],
+  },
+  {
+    id: 'imow-5-evo',
+    title: 'STIHL iMOW 5 EVO',
+    subtitle: 'Keizers-prijs — neem contact op',
+    description: 'EVO-versie voor gazons tot 1.500 m², geschikt voor terreinen tot 45% helling. Ideaal voor glooiende tuinen.',
+    price: 149900,
+    category: 'Robotmaaier',
+    badge: 'new',
+    heroImage: '',
+    galleryImages: [],
+    keySpecs: [
+      { label: 'Maaioppervlak',  value: 'tot 1.500 m²' },
+      { label: 'Max. helling',   value: '45%' },
+      { label: 'Connectiviteit', value: 'WiFi-app' },
+    ],
+  },
+  {
+    id: 'imow-6',
+    title: 'STIHL iMOW 6',
+    subtitle: 'Keizers-prijs — neem contact op',
+    description: 'Topmodel voor grote tuinen tot 3.000 m². Meerdere zones, uitgebreide app-bediening en automatische planning.',
+    price: 179900,
+    category: 'Robotmaaier',
+    heroImage: '',
+    galleryImages: [],
+    keySpecs: [
+      { label: 'Maaioppervlak',  value: 'tot 3.000 m²' },
+      { label: 'Max. helling',   value: '40%' },
+      { label: 'Connectiviteit', value: 'WiFi-app' },
+    ],
+  },
+  {
+    id: 'imow-6-evo',
+    title: 'STIHL iMOW 6 EVO',
+    subtitle: 'Keizers-prijs — neem contact op',
+    description: 'Het krachtigste iMOW-model voor tuinen tot 3.000 m², tot 45% helling. Volledig app-gestuurd met geavanceerde zoneplanning.',
+    price: 199900,
+    category: 'Robotmaaier',
+    badge: 'popular',
+    heroImage: '',
+    galleryImages: [],
+    keySpecs: [
+      { label: 'Maaioppervlak',  value: 'tot 3.000 m²' },
+      { label: 'Max. helling',   value: '45%' },
+      { label: 'Connectiviteit', value: 'WiFi-app' },
+    ],
+  },
+];
+
+// ─── Model specs (used by advisor engine) ────────────────────────
+
+export const STIHL_MODEL_SPECS: ModelSpec[] = [
+  { id: 'imow-3',     areaSysM2:  500, slopeMax: 40, smart: true, wildlife: false, price: 79900  },
+  { id: 'imow-3-evo', areaSysM2:  500, slopeMax: 45, smart: true, wildlife: false, price: 89900  },
+  { id: 'imow-4',     areaSysM2: 1000, slopeMax: 40, smart: true, wildlife: false, price: 109900 },
+  { id: 'imow-4-evo', areaSysM2: 1000, slopeMax: 45, smart: true, wildlife: false, price: 119900 },
+  { id: 'imow-5',     areaSysM2: 1500, slopeMax: 40, smart: true, wildlife: false, price: 139900 },
+  { id: 'imow-5-evo', areaSysM2: 1500, slopeMax: 45, smart: true, wildlife: false, price: 149900 },
+  { id: 'imow-6',     areaSysM2: 3000, slopeMax: 40, smart: true, wildlife: false, price: 179900 },
+  { id: 'imow-6-evo', areaSysM2: 3000, slopeMax: 45, smart: true, wildlife: false, price: 199900 },
+];
+
+// ─── Stihl accessories ────────────────────────────────────────────
+
+export const stihlAccessories: AccessoryOption[] = [
+  {
+    id: 'stihl-garage',
+    title: 'STIHL iMOW Garage',
+    description: 'Beschermt het basisstation en de robotmaaier tegen zon, regen en vuil. Verlengt de levensduur.',
+    price: 18900,
+    category: 'protection',
+    badge: 'popular',
+  },
+  {
+    id: 'stihl-messen',
+    title: 'STIHL iMOW Vervangmessen (set)',
+    description: 'Originele STIHL vervangmessen voor alle iMOW-modellen. Zorgen voor een strak en gelijkmatig maairesultaat.',
+    price: 1599,
+    category: 'cutting',
+    badge: 'popular',
+  },
+  {
+    id: 'stihl-begrenzingsdraad',
+    title: 'STIHL Begrenzingsdraad (100 m)',
+    description: 'Extra begrenzingsdraad voor het afbakenen van maaizones en obstakels.',
+    price: 2499,
+    category: 'other',
+  },
+  {
+    id: 'stihl-pennen',
+    title: 'STIHL Draadpennen (set van 150)',
+    description: 'Bevestigingspennen voor het vastzetten van de begrenzings- en geleidingsdraad in de grond.',
+    price: 1299,
+    category: 'other',
+  },
+];
