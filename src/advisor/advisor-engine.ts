@@ -13,6 +13,7 @@ export interface AdvisorAnswers {
   slope:    SlopeBucket | null;
   wantsSmart:    boolean | null;   // WiFi/4G app
   wantsWildlife: boolean | null;   // AI wildlife detection
+  wantsWireless: boolean | null;   // wire-free (true) vs boundary wire ok (false/null)
 }
 
 // Representative m² used for model filtering (upper end of range for safety)
@@ -96,7 +97,19 @@ export function getRecommendationForBrand(
     }
   }
 
-  // Step 4: Pick cheapest model that satisfies all constraints
+  // Step 4: Wireless preference (soft)
+  if (answers.wantsWireless) {
+    const filtered = candidates.filter(m => m.wireless);
+    if (filtered.length > 0) {
+      candidates = filtered;
+    } else {
+      tradeoffs.push(
+        'Er zijn geen draadloze modellen die passen bij uw wensen. Dit model werkt met begrenzingsdraad.'
+      );
+    }
+  }
+
+  // Step 5: Pick cheapest model that satisfies all constraints
   const sorted = [...candidates].sort((a, b) => a.price - b.price);
   const chosen: ModelSpec = sorted[0];
 

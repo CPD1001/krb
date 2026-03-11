@@ -253,19 +253,20 @@ export interface ModelSpec {
   slopeMax: number;    // max slope %
   smart: boolean;      // has WiFi/4G
   wildlife: boolean;   // has AI wildlife detection
+  wireless: boolean;   // true = wire-free (NERA), false = requires boundary wire
   price: number;       // Keizers price in cents
 }
 
 export const MODEL_SPECS: ModelSpec[] = [
-  { id: 'aspire-r6v',    areaSysM2: 600,  slopeMax: 40, smart: false, wildlife: false, price: 99900  },
-  { id: '305v',          areaSysM2: 800,  slopeMax: 40, smart: false, wildlife: false, price: 119900 },
-  { id: '312v',          areaSysM2: 1200, slopeMax: 40, smart: false, wildlife: false, price: 169900 },
-  { id: '305e-nera',     areaSysM2: 900,  slopeMax: 30, smart: true,  wildlife: false, price: 209900 },
-  { id: '310e-nera',     areaSysM2: 1500, slopeMax: 30, smart: true,  wildlife: false, price: 209900 },
-  { id: '320-nera',      areaSysM2: 3300, slopeMax: 50, smart: true,  wildlife: false, price: 289900 },
-  { id: '405ve-nera',    areaSysM2: 900,  slopeMax: 30, smart: true,  wildlife: true,  price: 249900 },
-  { id: '410ve-nera',    areaSysM2: 1500, slopeMax: 30, smart: true,  wildlife: true,  price: 319900 },
-  { id: '430v-nera',     areaSysM2: 4800, slopeMax: 50, smart: true,  wildlife: true,  price: 429900 },
-  { id: '450v-nera',     areaSysM2: 7500, slopeMax: 50, smart: true,  wildlife: true,  price: 549900 },
-  { id: '435x-awd-nera', areaSysM2: 5000, slopeMax: 70, smart: true,  wildlife: true,  price: 409900 },
+  { id: 'aspire-r6v',    areaSysM2: 600,  slopeMax: 40, smart: false, wildlife: false, wireless: false, price: 99900  },
+  { id: '305v',          areaSysM2: 800,  slopeMax: 40, smart: false, wildlife: false, wireless: false, price: 119900 },
+  { id: '312v',          areaSysM2: 1200, slopeMax: 40, smart: false, wildlife: false, wireless: false, price: 169900 },
+  { id: '305e-nera',     areaSysM2: 900,  slopeMax: 30, smart: true,  wildlife: false, wireless: true,  price: 209900 },
+  { id: '310e-nera',     areaSysM2: 1500, slopeMax: 30, smart: true,  wildlife: false, wireless: true,  price: 209900 },
+  { id: '320-nera',      areaSysM2: 3300, slopeMax: 50, smart: true,  wildlife: false, wireless: true,  price: 289900 },
+  { id: '405ve-nera',    areaSysM2: 900,  slopeMax: 30, smart: true,  wildlife: true,  wireless: true,  price: 249900 },
+  { id: '410ve-nera',    areaSysM2: 1500, slopeMax: 30, smart: true,  wildlife: true,  wireless: true,  price: 319900 },
+  { id: '430v-nera',     areaSysM2: 4800, slopeMax: 50, smart: true,  wildlife: true,  wireless: true,  price: 429900 },
+  { id: '450v-nera',     areaSysM2: 7500, slopeMax: 50, smart: true,  wildlife: true,  wireless: true,  price: 549900 },
+  { id: '435x-awd-nera', areaSysM2: 5000, slopeMax: 70, smart: true,  wildlife: true,  wireless: true,  price: 409900 },
 ];

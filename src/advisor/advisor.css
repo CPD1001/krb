@@ -236,6 +236,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  position: relative;
 }
 
 .adv-brand-rec__name {
@@ -297,6 +298,70 @@
 .adv-brand-rec__cta:hover {
   opacity: 0.9;
   transform: translateY(-1px);
+}
+
+/* ─── Wire note (single-brand result) ───────────────────────── */
+.adv-result__wire-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8375rem;
+  font-weight: 600;
+  color: rgba(120, 80, 0, 0.85);
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 8px;
+  padding: 0.5rem 0.875rem;
+}
+
+/* ─── Secondary "Ook mogelijk" header ───────────────────────── */
+.adv-secondary-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: 1.25rem 0 0.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--cfg-color-border, #e2e2e2);
+}
+
+.adv-secondary-header__label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--cfg-color-text, #1a1a1a);
+}
+
+.adv-secondary-header__sub {
+  font-size: 0.8125rem;
+  color: var(--cfg-color-text-secondary, #555);
+}
+
+/* ─── Wire banner on brand rec card ─────────────────────────── */
+.adv-brand-rec--wired {
+  padding-top: calc(1.25rem + 30px);
+}
+
+.adv-brand-rec__wire-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(251, 191, 36, 0.15);
+  border-bottom: 1px solid rgba(251, 191, 36, 0.35);
+  color: rgba(120, 80, 0, 0.9);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.4rem 0.875rem;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.adv-brand-rec__tradeoff {
+  font-size: 0.8rem;
+  color: var(--cfg-color-text-muted, #888);
+  margin: 0;
+  font-style: italic;
 }
 
 /* ─── Responsive ─────────────────────────────────────────────── */

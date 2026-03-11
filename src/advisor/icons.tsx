@@ -209,6 +209,41 @@ export function IconHedgehog({ size = defaults.size }: IconProps) {
   );
 }
 
+// ─── Wireless / Wired ─────────────────────────────────────────────
+
+export function IconWireless({ size = defaults.size }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      {/* mower body */}
+      <rect x="13" y="22" width="14" height="9" rx="2" stroke="currentColor" strokeWidth={defaults.strokeWidth}/>
+      <line x1="16" y1="22" x2="16" y2="19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="24" y1="22" x2="24" y2="19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      {/* wireless signal arcs — no wire around it */}
+      <path d="M10 18 Q20 9 30 18" stroke="currentColor" strokeWidth={defaults.strokeWidth} strokeLinecap="round" fill="none"/>
+      <path d="M14 20.5 Q20 14 26 20.5" stroke="currentColor" strokeWidth={defaults.strokeWidth} strokeLinecap="round" fill="none" opacity="0.6"/>
+      {/* dot at top */}
+      <circle cx="20" cy="12" r="1.5" fill="currentColor" opacity="0.5"/>
+    </svg>
+  );
+}
+
+export function IconWired({ size = defaults.size }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      {/* mower body */}
+      <rect x="13" y="20" width="14" height="9" rx="2" stroke="currentColor" strokeWidth={defaults.strokeWidth}/>
+      {/* boundary wire around the garden */}
+      <rect x="4" y="6" width="32" height="28" rx="3"
+        stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 2.5" opacity="0.5"/>
+      {/* wire stake pins */}
+      <circle cx="4"  cy="6"  r="1.5" fill="currentColor" opacity="0.4"/>
+      <circle cx="36" cy="6"  r="1.5" fill="currentColor" opacity="0.4"/>
+      <circle cx="4"  cy="34" r="1.5" fill="currentColor" opacity="0.4"/>
+      <circle cx="36" cy="34" r="1.5" fill="currentColor" opacity="0.4"/>
+    </svg>
+  );
+}
+
 export function IconLeaf({ size = defaults.size }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 40 40" fill="none" aria-hidden="true">

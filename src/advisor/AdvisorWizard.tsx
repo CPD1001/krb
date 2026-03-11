@@ -9,11 +9,11 @@ import { formatPrice } from '../configurator/engine/pricing';
 import {
   IconGardenXS, IconGardenSM, IconGardenMD, IconGardenLG, IconGardenXL, IconGardenXXL,
   IconSlopeFlat, IconSlopeMild, IconSlopeModerate, IconSlopeSteep,
-  IconWifi, IconBluetooth, IconHedgehog, IconLeaf,
+  IconWifi, IconBluetooth, IconHedgehog, IconLeaf, IconWireless, IconWired,
 } from './icons';
 import './advisor.css';
 
-type Step = 'area' | 'slope' | 'smart' | 'wildlife' | 'result';
+type Step = 'area' | 'slope' | 'smart' | 'wildlife' | 'wireless' | 'result';
 
 interface Props {
   onComplete: (productData: ProductConfigData, brand: BrandDef) => void;
@@ -23,7 +23,7 @@ interface Props {
 export function AdvisorWizard({ onComplete, onSkip }: Props) {
   const [step, setStep]       = useState<Step>('area');
   const [answers, setAnswers] = useState<AdvisorAnswers>({
-    area: null, slope: null, wantsSmart: null, wantsWildlife: null,
+    area: null, slope: null, wantsSmart: null, wantsWildlife: null, wantsWireless: null,
   });
   const [recs, setRecs] = useState<Recommendation[]>([]);
 
@@ -51,15 +51,21 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
   }
 
   function selectWildlife(wantsWildlife: boolean) {
-    const next = { ...answers, wantsWildlife };
+    setAnswers(a => ({ ...a, wantsWildlife }));
+    setStep('wireless');
+  }
+
+  function selectWireless(wantsWireless: boolean) {
+    const next = { ...answers, wantsWireless };
     setAnswers(next);
     finalize(next);
   }
 
   const stepNum: Partial<Record<Step, number>> = {
-    area: 1, slope: 2, smart: 3, wildlife: 4,
+    area: 1, slope: 2, smart: 3, wildlife: 4, wireless: 5,
   };
   const currentNum = stepNum[step] ?? null;
+  const TOTAL_STEPS = 5;
 
   return (
     <div className="adv-shell">
@@ -81,7 +87,7 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
       <main className="adv-main">
         {currentNum !== null && (
           <div className="adv-dots" aria-hidden="true">
-            {[1, 2, 3, 4].map(n => (
+            {Array.from({ length: TOTAL_STEPS }, (_, i) => i + 1).map(n => (
               <span
                 key={n}
                 className={[
@@ -97,32 +103,22 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
         <div className="adv-content">
 
           {step === 'area' && (
-            <AdvisorStep title="Hoe groot is uw gazon?" sub="Stap 1 van 4">
+            <AdvisorStep title="Hoe groot is uw gazon?" sub={`Stap 1 van ${TOTAL_STEPS}`}>
               <div className="adv-cards adv-cards--2col">
                 {AREA_OPTIONS.map(opt => (
-                  <AdvCard
-                    key={opt.id}
-                    label={opt.label}
-                    sub={opt.sub}
-                    icon={opt.icon}
-                    onClick={() => selectArea(opt.id as AreaBucket)}
-                  />
+                  <AdvCard key={opt.id} label={opt.label} sub={opt.sub} icon={opt.icon}
+                    onClick={() => selectArea(opt.id as AreaBucket)} />
                 ))}
               </div>
             </AdvisorStep>
           )}
 
           {step === 'slope' && (
-            <AdvisorStep title="Hoe is uw terrein?" sub="Stap 2 van 4">
+            <AdvisorStep title="Hoe is uw terrein?" sub={`Stap 2 van ${TOTAL_STEPS}`}>
               <div className="adv-cards adv-cards--2col">
                 {SLOPE_OPTIONS.map(opt => (
-                  <AdvCard
-                    key={opt.id}
-                    label={opt.label}
-                    sub={opt.sub}
-                    icon={opt.icon}
-                    onClick={() => selectSlope(opt.id as SlopeBucket)}
-                  />
+                  <AdvCard key={opt.id} label={opt.label} sub={opt.sub} icon={opt.icon}
+                    onClick={() => selectSlope(opt.id as SlopeBucket)} />
                 ))}
               </div>
               <BackBtn onClick={() => setStep('area')} />
@@ -130,7 +126,7 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
           )}
 
           {step === 'smart' && (
-            <AdvisorStep title="Wilt u app-bediening via WiFi?" sub="Stap 3 van 4">
+            <AdvisorStep title="Wilt u app-bediening via WiFi?" sub={`Stap 3 van ${TOTAL_STEPS}`}>
               <p className="adv-step__hint">
                 Met WiFi + 4G bedient u uw maaier via de app. Maaiplan instellen, locatie volgen en meldingen ontvangen.
               </p>
@@ -143,7 +139,7 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
           )}
 
           {step === 'wildlife' && (
-            <AdvisorStep title="Heeft u dieren in de tuin?" sub="Stap 4 van 4">
+            <AdvisorStep title="Heeft u dieren in de tuin?" sub={`Stap 4 van ${TOTAL_STEPS}`}>
               <p className="adv-step__hint">
                 AI wildlife-detectie stopt de maaier automatisch als er een egel, kat of ander dier in de buurt is.
               </p>
@@ -155,11 +151,26 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
             </AdvisorStep>
           )}
 
+          {step === 'wireless' && (
+            <AdvisorStep title="Wilt u een draadloos systeem?" sub={`Stap 5 van ${TOTAL_STEPS}`}>
+              <p className="adv-step__hint">
+                Een draadloos systeem (zoals Husqvarna NERA) heeft geen begrenzingsdraad nodig.
+                Een systeem met draad is ook uitstekend, maar vereist éénmalig installatie van een draad rondom uw gazon.
+              </p>
+              <div className="adv-cards adv-cards--2col">
+                <AdvCard label="Ja, draadloos" sub="Geen begrenzingsdraad" icon={<IconWireless />} onClick={() => selectWireless(true)} />
+                <AdvCard label="Maakt niet uit" sub="Draad is ook prima" icon={<IconWired />} onClick={() => selectWireless(false)} />
+              </div>
+              <BackBtn onClick={() => setStep('wildlife')} />
+            </AdvisorStep>
+          )}
+
           {step === 'result' && recs.length > 0 && (
             <ResultScreen
               recs={recs}
+              answers={answers}
               onSelectBrand={(productData, brand) => onComplete(productData, brand)}
-              onBack={() => setStep('wildlife')}
+              onBack={() => setStep('wireless')}
             />
           )}
 
@@ -174,7 +185,7 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
               <a href="mailto:info@keizers.nl" className="adv-result__cta">
                 Neem contact op →
               </a>
-              <BackBtn onClick={() => setStep('wildlife')} />
+              <BackBtn onClick={() => setStep('wireless')} />
             </div>
           )}
 
@@ -187,16 +198,27 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
 // ─── Result screen ────────────────────────────────────────────────
 
 function ResultScreen({
-  recs, onSelectBrand, onBack,
+  recs, answers, onSelectBrand, onBack,
 }: {
   recs: Recommendation[];
+  answers: AdvisorAnswers;
   onSelectBrand: (productData: ProductConfigData, brand: BrandDef) => void;
   onBack: () => void;
 }) {
-  // Single brand: show detailed recommendation with branded CTA
-  if (recs.length === 1) {
-    const rec = recs[0];
+  const wantsWireless = answers.wantsWireless === true;
+
+  // Split into wireless (primary) and wired (secondary) recommendations
+  const wirelessRecs = recs.filter(r => r.brand.modelSpecs.find(m => m.id === r.modelId)?.wireless);
+  const wiredRecs    = recs.filter(r => !r.brand.modelSpecs.find(m => m.id === r.modelId)?.wireless);
+
+  const primaryRecs   = wantsWireless ? wirelessRecs : recs;
+  const secondaryRecs = wantsWireless ? wiredRecs    : [];
+
+  // Single primary recommendation — show detailed view
+  if (primaryRecs.length === 1 && secondaryRecs.length === 0) {
+    const rec = primaryRecs[0];
     const machine = rec.brand.catalog.find(m => m.id === rec.modelId)!;
+    const isWired = !rec.brand.modelSpecs.find(m => m.id === rec.modelId)?.wireless;
 
     return (
       <div className="adv-result">
@@ -210,19 +232,21 @@ function ResultScreen({
 
         {rec.tradeoffs.length > 0 && (
           <div className="adv-result__tradeoffs">
-            {rec.tradeoffs.map(t => (
-              <p key={t} className="adv-result__tradeoff">{t}</p>
-            ))}
+            {rec.tradeoffs.map(t => <p key={t} className="adv-result__tradeoff">{t}</p>)}
           </div>
         )}
 
         <div className="adv-result__price">
           <span>Vanaf</span>
           <strong>{formatPrice(machine.price)}</strong>
-          {machine.subtitle && (
-            <span className="adv-result__msrp">{machine.subtitle}</span>
-          )}
+          {machine.subtitle && <span className="adv-result__msrp">{machine.subtitle}</span>}
         </div>
+
+        {isWired && wantsWireless && (
+          <div className="adv-result__wire-note">
+            <WireIcon /> Werkt met begrenzingsdraad
+          </div>
+        )}
 
         <button
           className="adv-result__cta"
@@ -237,44 +261,104 @@ function ResultScreen({
     );
   }
 
-  // Multiple brands: show brand selection cards
+  // Multiple recommendations — brand cards with optional secondary section
   return (
     <div className="adv-result">
       <p className="adv-result__tag">Ons advies</p>
       <h2 className="adv-result__model" style={{ fontSize: '1.5rem' }}>
-        Passende maaiers voor uw tuin
+        {wantsWireless && primaryRecs.length > 0
+          ? 'Draadloze aanbevelingen'
+          : 'Passende maaiers voor uw tuin'}
       </h2>
-      <p className="adv-result__rationale">
-        Op basis van uw wensen adviseren wij de volgende modellen. Kies uw voorkeursmerk om verder te configureren.
-      </p>
+      {wantsWireless && primaryRecs.length > 0 && (
+        <p className="adv-result__rationale">
+          Op basis van uw wensen adviseren wij de volgende draadloze modellen.
+        </p>
+      )}
 
       <div className="adv-brand-recs">
-        {recs.map(rec => {
-          const machine = rec.brand.catalog.find(m => m.id === rec.modelId)!;
-          return (
-            <div key={rec.brand.id} className="adv-brand-rec">
-              <p className="adv-brand-rec__name">{rec.brand.name}</p>
-              <p className="adv-brand-rec__model">{machine.title}</p>
-              <ul className="adv-brand-rec__highlights">
-                {rec.highlights.slice(0, 3).map(h => <li key={h}>{h}</li>)}
-              </ul>
-              <div className="adv-brand-rec__price">
-                <strong>{formatPrice(machine.price)}</strong>
-              </div>
-              <button
-                className="adv-brand-rec__cta"
-                style={{ background: rec.brand.colors.accent }}
-                onClick={() => onSelectBrand(rec.productData, rec.brand)}
-              >
-                Kies {rec.brand.name} →
-              </button>
-            </div>
-          );
-        })}
+        {primaryRecs.map(rec => (
+          <BrandRecCard
+            key={rec.brand.id}
+            rec={rec}
+            onSelect={onSelectBrand}
+            wiredNote={false}
+          />
+        ))}
       </div>
+
+      {secondaryRecs.length > 0 && (
+        <>
+          <div className="adv-secondary-header">
+            <span className="adv-secondary-header__label">Ook mogelijk</span>
+            <span className="adv-secondary-header__sub">
+              Deze modellen werken met een begrenzingsdraad
+            </span>
+          </div>
+          <div className="adv-brand-recs">
+            {secondaryRecs.map(rec => (
+              <BrandRecCard
+                key={rec.brand.id}
+                rec={rec}
+                onSelect={onSelectBrand}
+                wiredNote
+              />
+            ))}
+          </div>
+        </>
+      )}
 
       <BackBtn onClick={onBack} />
     </div>
+  );
+}
+
+// ─── Brand recommendation card ────────────────────────────────────
+
+function BrandRecCard({
+  rec, onSelect, wiredNote,
+}: {
+  rec: Recommendation;
+  onSelect: (productData: ProductConfigData, brand: BrandDef) => void;
+  wiredNote: boolean;
+}) {
+  const machine = rec.brand.catalog.find(m => m.id === rec.modelId)!;
+  return (
+    <div className={`adv-brand-rec${wiredNote ? ' adv-brand-rec--wired' : ''}`}>
+      {wiredNote && (
+        <div className="adv-brand-rec__wire-banner">
+          <WireIcon /> Werkt met begrenzingsdraad
+        </div>
+      )}
+      <p className="adv-brand-rec__name">{rec.brand.name}</p>
+      <p className="adv-brand-rec__model">{machine.title}</p>
+      <ul className="adv-brand-rec__highlights">
+        {rec.highlights.slice(0, 3).map(h => <li key={h}>{h}</li>)}
+      </ul>
+      {rec.tradeoffs.length > 0 && (
+        <p className="adv-brand-rec__tradeoff">{rec.tradeoffs[0]}</p>
+      )}
+      <div className="adv-brand-rec__price">
+        <strong>{formatPrice(machine.price)}</strong>
+      </div>
+      <button
+        className="adv-brand-rec__cta"
+        style={{ background: rec.brand.colors.accent }}
+        onClick={() => onSelect(rec.productData, rec.brand)}
+      >
+        Kies {rec.brand.name} →
+      </button>
+    </div>
+  );
+}
+
+// ─── Wire icon ────────────────────────────────────────────────────
+
+function WireIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2.5 2"/>
+    </svg>
   );
 }
 
