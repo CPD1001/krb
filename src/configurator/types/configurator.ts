@@ -13,6 +13,7 @@ export interface ConfigOption {
   removesOnSelect?: string[];    // removes these on select, but does NOT disable them in UI
   requires?: string[];
   specs?: Record<string, string>;
+  lockedReason?: string;         // when set: shown but non-clickable with this message
 }
 
 export interface BundleRule {

@@ -18,8 +18,19 @@ const BADGE_LABELS: Record<string, string> = {
   pro: 'Professioneel',
 };
 
+function LockIcon() {
+  return (
+    <svg width="11" height="13" viewBox="0 0 11 13" fill="none" aria-hidden="true">
+      <rect x="1.5" y="5.5" width="8" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M3.5 5.5V3.5a2 2 0 0 1 4 0v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
 export function OptionCard({ option, selected, disabled, recommended, mode, onSelect }: OptionCardProps) {
   const badge = recommended ? 'recommended' : option.badge;
+  const isLocked = !!option.lockedReason;
+  const effectivelyDisabled = disabled || isLocked;
 
   return (
     <button
@@ -27,15 +38,23 @@ export function OptionCard({ option, selected, disabled, recommended, mode, onSe
       className={[
         'cfg-option-card',
         selected && 'cfg-option-card--selected',
-        disabled && 'cfg-option-card--disabled',
+        isLocked ? 'cfg-option-card--locked' : disabled && 'cfg-option-card--disabled',
         recommended && 'cfg-option-card--recommended',
       ].filter(Boolean).join(' ')}
-      onClick={() => !disabled && onSelect()}
-      disabled={disabled}
+      onClick={() => !effectivelyDisabled && onSelect()}
+      disabled={effectivelyDisabled}
       aria-pressed={mode === 'checkbox' ? selected : undefined}
       aria-checked={mode === 'radio' ? selected : undefined}
       role={mode === 'radio' ? 'radio' : 'checkbox'}
     >
+      {/* Husqvarna-exclusive banner */}
+      {isLocked && (
+        <div className="cfg-option-card__exclusive-banner">
+          <LockIcon />
+          {option.lockedReason}
+        </div>
+      )}
+
       {/* Selection indicator */}
       <div className="cfg-option-card__check">
         {mode === 'radio' ? (
@@ -98,8 +117,8 @@ export function OptionCard({ option, selected, disabled, recommended, mode, onSe
         </span>
       </div>
 
-      {/* Disabled reason */}
-      {disabled && (
+      {/* Disabled reason (compatibility) */}
+      {!isLocked && disabled && (
         <div className="cfg-option-card__disabled-overlay">
           <span>Niet compatibel</span>
         </div>

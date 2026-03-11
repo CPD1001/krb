@@ -715,6 +715,30 @@ body {
   pointer-events: none;
 }
 
+.cfg-option-card--locked {
+  opacity: 0.72;
+  cursor: default;
+  pointer-events: none;
+  padding-top: calc(1rem + 28px); /* make room for the exclusive banner */
+}
+
+.cfg-option-card__exclusive-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #283B5F;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.4rem 0.875rem;
+  border-radius: var(--cfg-radius-md) var(--cfg-radius-md) 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  letter-spacing: 0.01em;
+}
+
 .cfg-option-card__check {
   flex-shrink: 0;
 }

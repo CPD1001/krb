@@ -6,6 +6,13 @@ import { sharedServices } from '../configurator/data/shared-services';
 
 // Installation-only services for brands without warranty/service/lease contracts
 const installationOnlyServices = sharedServices.filter(s => s.category === 'installation');
+
+// Warranty/service/lease options shown as locked (Husqvarna-exclusive) in other brands
+const husqvarnaExclusiveLocked = sharedServices
+  .filter(s => ['warranty', 'service-contract', 'lease'].includes(s.category))
+  .map(s => ({ ...s, lockedReason: 'Alleen beschikbaar voor Husqvarna modellen' }));
+
+const stihlServices = [...installationOnlyServices, ...husqvarnaExclusiveLocked];
 import { stihlCatalog, STIHL_MODEL_SPECS, stihlAccessories } from '../configurator/data/stihl-catalog';
 
 // ─── Brand theme ──────────────────────────────────────────────────
@@ -71,7 +78,7 @@ export const stihlBrand: BrandDef = {
   modelSpecs:     STIHL_MODEL_SPECS,
   catalog:        stihlCatalog,
   getAccessories: () => stihlAccessories,
-  services:       installationOnlyServices,
+  services:       stihlServices,
 };
 
 // ─── All active brands ────────────────────────────────────────────
