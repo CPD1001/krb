@@ -258,7 +258,7 @@ export interface ModelSpec {
 }
 
 export const MODEL_SPECS: ModelSpec[] = [
-  { id: 'aspire-r6v',    areaSysM2: 600,  slopeMax: 40, smart: false, wildlife: false, wireless: false, price: 99900  },
+  { id: 'aspire-r6v',    areaSysM2: 600,  slopeMax: 40, smart: false, wildlife: false, wireless: true,  price: 99900  },
   { id: '305v',          areaSysM2: 800,  slopeMax: 40, smart: false, wildlife: false, wireless: false, price: 119900 },
   { id: '312v',          areaSysM2: 1200, slopeMax: 40, smart: false, wildlife: false, wireless: false, price: 169900 },
   { id: '305e-nera',     areaSysM2: 900,  slopeMax: 30, smart: true,  wildlife: false, wireless: true,  price: 209900 },
