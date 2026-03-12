@@ -192,12 +192,39 @@
   font-size: 0.8375rem; color: rgba(180,130,0,0.9); margin: 0; line-height: 1.5;
 }
 
+/* ─── Spec grid ─────────────────────────────────────────────────── */
+.adv-spec-grid {
+  margin: 0.875rem 0;
+  border: 1px solid var(--cfg-color-border, #e5e7eb);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.adv-spec-grid__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.45rem 0.875rem;
+  border-bottom: 1px solid var(--cfg-color-border, #e5e7eb);
+}
+.adv-spec-grid__row:last-child { border-bottom: none; }
+.adv-spec-grid__row:nth-child(even) { background: rgba(0,0,0,0.018); }
+.adv-spec-grid__label {
+  font-size: 0.8rem;
+  color: var(--cfg-color-text-muted, #888);
+  flex-shrink: 0;
+}
+.adv-spec-grid__value {
+  font-size: 0.8375rem;
+  font-weight: 600;
+  text-align: right;
+}
+
 .adv-result__price {
   display: flex; align-items: baseline; gap: 0.625rem; flex-wrap: wrap; margin-top: 0.25rem;
 }
-.adv-result__price span   { font-size: 0.875rem; color: var(--cfg-color-text-secondary, #555); }
 .adv-result__price strong { font-size: 2rem; font-weight: 700; }
-.adv-result__msrp         { font-size: 0.8125rem; color: var(--cfg-color-text-muted, #888); }
+.adv-result__rrp { font-size: 0.875rem; color: var(--cfg-color-text-muted, #999); text-decoration: line-through; }
 
 .adv-result__cta {
   display: block;
@@ -362,6 +389,109 @@
   color: var(--cfg-color-text-muted, #888);
   margin: 0;
   font-style: italic;
+}
+
+/* ─── Slope info panel ───────────────────────────────────────── */
+.adv-slope-info {
+  margin: -0.5rem 0 1.25rem;
+}
+
+.adv-slope-info__toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1px solid var(--cfg-color-border, #e2e2e2);
+  border-radius: 8px;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+  color: var(--cfg-color-text-secondary, #555);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  width: 100%;
+  text-align: left;
+}
+
+.adv-slope-info__toggle:hover {
+  border-color: var(--adv-accent);
+  color: var(--cfg-color-text, #1a1a1a);
+}
+
+.adv-slope-info__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--adv-accent);
+  color: #1a1a1a;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-style: normal;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.adv-slope-info__chevron {
+  margin-left: auto;
+  font-size: 0.75rem;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.adv-slope-info__panel {
+  margin-top: 0.5rem;
+  border: 1px solid var(--cfg-color-border, #e2e2e2);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--cfg-color-bg-card, #fff);
+}
+
+.adv-slope-info__img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.adv-slope-info__body {
+  padding: 1rem 1.125rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.adv-slope-info__formula {
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: rgba(239, 182, 97, 0.12);
+  border-left: 3px solid var(--adv-accent);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0 6px 6px 0;
+  margin: 0;
+  font-family: monospace;
+}
+
+.adv-slope-info__steps {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.adv-slope-info__steps li {
+  font-size: 0.875rem;
+  color: var(--cfg-color-text-secondary, #555);
+  line-height: 1.5;
+}
+
+.adv-slope-info__example {
+  font-size: 0.875rem;
+  color: var(--cfg-color-text, #1a1a1a);
+  background: rgba(239, 182, 97, 0.08);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
 }
 
 /* ─── Responsive ─────────────────────────────────────────────── */

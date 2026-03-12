@@ -97,6 +97,52 @@ export function IconGardenXXL({ size = defaults.size }: IconProps) {
   );
 }
 
+export function IconGardenMEGA({ size = defaults.size }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      {/* outer boundary */}
+      <rect x="1" y="3" width="38" height="34" rx="2" stroke="currentColor" strokeWidth={defaults.strokeWidth}/>
+      {/* two full pitches side by side */}
+      <line x1="20" y1="3" x2="20" y2="37" stroke="currentColor" strokeWidth="1" opacity="0.4"/>
+      {/* left pitch: centre line + circle */}
+      <line x1="10" y1="3" x2="10" y2="37" stroke="currentColor" strokeWidth="0.75" opacity="0.25" strokeDasharray="2 2"/>
+      <circle cx="10" cy="20" r="4" stroke="currentColor" strokeWidth="0.75" opacity="0.3"/>
+      {/* right pitch: centre line + circle */}
+      <line x1="30" y1="3" x2="30" y2="37" stroke="currentColor" strokeWidth="0.75" opacity="0.25" strokeDasharray="2 2"/>
+      <circle cx="30" cy="20" r="4" stroke="currentColor" strokeWidth="0.75" opacity="0.3"/>
+      {/* left goals */}
+      <rect x="1" y="16" width="2" height="8" stroke="currentColor" strokeWidth="0.85" opacity="0.5"/>
+      <rect x="18" y="16" width="2" height="8" stroke="currentColor" strokeWidth="0.85" opacity="0.5"/>
+      {/* right goals */}
+      <rect x="20" y="16" width="2" height="8" stroke="currentColor" strokeWidth="0.85" opacity="0.5"/>
+      <rect x="37" y="16" width="2" height="8" stroke="currentColor" strokeWidth="0.85" opacity="0.5"/>
+    </svg>
+  );
+}
+
+export function IconGardenPRO({ size = defaults.size }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      {/* outer pitch boundary */}
+      <rect x="1" y="4" width="38" height="32" rx="2" stroke="currentColor" strokeWidth={defaults.strokeWidth}/>
+      {/* centre line */}
+      <line x1="20" y1="4" x2="20" y2="36" stroke="currentColor" strokeWidth="1" opacity="0.4"/>
+      {/* centre circle */}
+      <circle cx="20" cy="20" r="5" stroke="currentColor" strokeWidth="1" opacity="0.4"/>
+      {/* centre spot */}
+      <circle cx="20" cy="20" r="1" fill="currentColor" opacity="0.5"/>
+      {/* left penalty area */}
+      <rect x="1" y="12" width="9" height="16" stroke="currentColor" strokeWidth="1" opacity="0.35"/>
+      {/* right penalty area */}
+      <rect x="30" y="12" width="9" height="16" stroke="currentColor" strokeWidth="1" opacity="0.35"/>
+      {/* left goal */}
+      <rect x="1" y="16" width="3" height="8" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
+      {/* right goal */}
+      <rect x="36" y="16" width="3" height="8" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
+    </svg>
+  );
+}
+
 // ─── Slope / terrain profile (side view) ─────────────────────────
 
 export function IconSlopeFlat({ size = defaults.size }: IconProps) {

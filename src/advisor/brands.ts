@@ -14,6 +14,8 @@ const husqvarnaExclusiveLocked = sharedServices
 
 const stihlServices = [...installationOnlyServices, ...husqvarnaExclusiveLocked];
 import { stihlCatalog, STIHL_MODEL_SPECS, stihlAccessories } from '../configurator/data/stihl-catalog';
+import { egoCatalog, EGO_MODEL_SPECS, egoAccessories } from '../configurator/data/ego-catalog';
+import { kressCatalog, KRESS_MODEL_SPECS, kressAccessories } from '../configurator/data/kress-catalog';
 
 // ─── Brand theme ──────────────────────────────────────────────────
 
@@ -81,7 +83,54 @@ export const stihlBrand: BrandDef = {
   services:       stihlServices,
 };
 
+// ─── EGO ─────────────────────────────────────────────────────────
+// PathIQ AI-vision (virtuele grens + objectdetectie), alle modellen draadloos
+
+const egoServices = [...installationOnlyServices, ...husqvarnaExclusiveLocked];
+
+export const egoBrand: BrandDef = {
+  id:   'ego',
+  name: 'EGO',
+  colors: {
+    accent:         '#3D8C00',
+    accentLight:    '#6DB800',
+    accentHover:    '#2E6B00',
+    accentGlow:     'rgba(61, 140, 0, 0.2)',
+    cardHover:      '#F0F8E8',
+    cardSelected:   '#E2F2D0',
+    borderSelected: '#3D8C00',
+  },
+  logoUrl:        'https://egopowerplus.nl/wp-content/uploads/2023/01/EGO-logo.svg',
+  modelSpecs:     EGO_MODEL_SPECS,
+  catalog:        egoCatalog,
+  getAccessories: () => egoAccessories,
+  services:       egoServices,
+};
+
+// ─── Kress ───────────────────────────────────────────────────────
+// EyePilot = AI-cameranavigate, Mission RTKn = RTK-GPS, alle modellen draadloos
+
+const kressServices = [...installationOnlyServices, ...husqvarnaExclusiveLocked];
+
+export const kressBrand: BrandDef = {
+  id:   'kress',
+  name: 'Kress',
+  colors: {
+    accent:         '#A0251A',
+    accentLight:    '#C94B3A',
+    accentHover:    '#7D1A11',
+    accentGlow:     'rgba(160, 37, 26, 0.2)',
+    cardHover:      '#FDF0EE',
+    cardSelected:   '#FAE0DC',
+    borderSelected: '#A0251A',
+  },
+  modelSpecs:     KRESS_MODEL_SPECS,
+  catalog:        kressCatalog,
+  getAccessories: () => kressAccessories,
+  services:       kressServices,
+};
+
 // ─── All active brands ────────────────────────────────────────────
 // Add new brands here — they automatically appear in the advisor result
 
-export const BRANDS: BrandDef[] = [husqvarnaBrand, stihlBrand];
+export const BRANDS: BrandDef[] = [husqvarnaBrand, stihlBrand, egoBrand, kressBrand];

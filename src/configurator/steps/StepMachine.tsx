@@ -62,10 +62,6 @@ export function StepMachine() {
               <div className="cfg-machine-card__info">
                 <span className="cfg-machine-card__category">{machine.category}</span>
                 <h3 className="cfg-machine-card__title">{machine.title}</h3>
-                {machine.subtitle && (
-                  <p className="cfg-machine-card__subtitle">{machine.subtitle}</p>
-                )}
-
                 <div className="cfg-machine-card__specs">
                   {machine.keySpecs.slice(0, 3).map(spec => (
                     <div key={spec.label} className="cfg-machine-card__spec">
@@ -76,7 +72,9 @@ export function StepMachine() {
                 </div>
 
                 <div className="cfg-machine-card__price">
-                  <span className="cfg-machine-card__price-label">Vanaf</span>
+                  {machine.rrp && (
+                    <span className="cfg-machine-card__price-rrp">Adviesprijs {formatPrice(machine.rrp)}</span>
+                  )}
                   <span className="cfg-machine-card__price-value">{formatPrice(machine.price)}</span>
                 </div>
               </div>

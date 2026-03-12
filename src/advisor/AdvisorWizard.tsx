@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import type { ProductConfigData } from '../configurator/types/configurator';
 import {
   AdvisorAnswers, AreaBucket, SlopeBucket,
@@ -7,7 +7,7 @@ import {
 import { BRANDS, BrandDef } from './brands';
 import { formatPrice } from '../configurator/engine/pricing';
 import {
-  IconGardenXS, IconGardenSM, IconGardenMD, IconGardenLG, IconGardenXL, IconGardenXXL,
+  IconGardenXS, IconGardenSM, IconGardenMD, IconGardenLG, IconGardenXL, IconGardenXXL, IconGardenPRO, IconGardenMEGA,
   IconSlopeFlat, IconSlopeMild, IconSlopeModerate, IconSlopeSteep,
   IconWifi, IconBluetooth, IconHedgehog, IconLeaf, IconWireless, IconWired,
 } from './icons';
@@ -115,6 +115,7 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
 
           {step === 'slope' && (
             <AdvisorStep title="Hoe is uw terrein?" sub={`Stap 2 van ${TOTAL_STEPS}`}>
+              <SlopeInfoPanel />
               <div className="adv-cards adv-cards--2col">
                 {SLOPE_OPTIONS.map(opt => (
                   <AdvCard key={opt.id} label={opt.label} sub={opt.sub} icon={opt.icon}
@@ -126,13 +127,13 @@ export function AdvisorWizard({ onComplete, onSkip }: Props) {
           )}
 
           {step === 'smart' && (
-            <AdvisorStep title="Wilt u app-bediening via WiFi?" sub={`Stap 3 van ${TOTAL_STEPS}`}>
+            <AdvisorStep title="Welke connectiviteit heeft uw voorkeur?" sub={`Stap 3 van ${TOTAL_STEPS}`}>
               <p className="adv-step__hint">
-                Met WiFi + 4G bedient u uw maaier via de app. Maaiplan instellen, locatie volgen en meldingen ontvangen.
+                Alle modellen zijn bedienbaar via een app. Het verschil zit in het netwerk: 4G/5G werkt overal — ook buiten uw wifi-bereik. WiFi werkt uitstekend als u thuis bent.
               </p>
               <div className="adv-cards adv-cards--2col">
-                <AdvCard label="Ja, met app" sub="WiFi + 4G bediening" icon={<IconWifi />} onClick={() => selectSmart(true)} />
-                <AdvCard label="Nee, eenvoudig" sub="Bluetooth volstaat" icon={<IconBluetooth />} onClick={() => selectSmart(false)} />
+                <AdvCard label="4G/5G" sub="Altijd en overal bereikbaar" icon={<IconWifi />} onClick={() => selectSmart(true)} />
+                <AdvCard label="WiFi volstaat" sub="App via thuisnetwerk" icon={<IconBluetooth />} onClick={() => selectSmart(false)} />
               </div>
               <BackBtn onClick={() => setStep('slope')} />
             </AdvisorStep>
@@ -226,9 +227,13 @@ function ResultScreen({
         <h2 className="adv-result__model">{machine.title}</h2>
         <p className="adv-result__rationale">{rec.rationale}</p>
 
-        <ul className="adv-result__highlights">
-          {rec.highlights.map(h => <li key={h}>{h}</li>)}
-        </ul>
+        <SpecGrid specs={machine.keySpecs} />
+
+        {rec.highlights.length > 0 && (
+          <ul className="adv-result__highlights">
+            {rec.highlights.map(h => <li key={h}>{h}</li>)}
+          </ul>
+        )}
 
         {rec.tradeoffs.length > 0 && (
           <div className="adv-result__tradeoffs">
@@ -237,9 +242,10 @@ function ResultScreen({
         )}
 
         <div className="adv-result__price">
-          <span>Vanaf</span>
+          {machine.rrp && (
+            <span className="adv-result__rrp">Adviesprijs {formatPrice(machine.rrp)}</span>
+          )}
           <strong>{formatPrice(machine.price)}</strong>
-          {machine.subtitle && <span className="adv-result__msrp">{machine.subtitle}</span>}
         </div>
 
         {isWired && wantsWireless && (
@@ -332,13 +338,14 @@ function BrandRecCard({
       )}
       <p className="adv-brand-rec__name">{rec.brand.name}</p>
       <p className="adv-brand-rec__model">{machine.title}</p>
-      <ul className="adv-brand-rec__highlights">
-        {rec.highlights.slice(0, 3).map(h => <li key={h}>{h}</li>)}
-      </ul>
+      <SpecGrid specs={machine.keySpecs} />
       {rec.tradeoffs.length > 0 && (
         <p className="adv-brand-rec__tradeoff">{rec.tradeoffs[0]}</p>
       )}
       <div className="adv-brand-rec__price">
+        {machine.rrp && (
+          <span className="adv-result__rrp" style={{ fontSize: '0.8rem' }}>Adviesprijs {formatPrice(machine.rrp)}</span>
+        )}
         <strong>{formatPrice(machine.price)}</strong>
       </div>
       <button
@@ -349,6 +356,21 @@ function BrandRecCard({
         Kies {rec.brand.name} →
       </button>
     </div>
+  );
+}
+
+// ─── Spec grid ────────────────────────────────────────────────────
+
+function SpecGrid({ specs }: { specs: { label: string; value: string }[] }) {
+  return (
+    <dl className="adv-spec-grid">
+      {specs.map(s => (
+        <div key={s.label} className="adv-spec-grid__row">
+          <dt className="adv-spec-grid__label">{s.label}</dt>
+          <dd className="adv-spec-grid__value">{s.value}</dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 
@@ -392,15 +414,67 @@ function BackBtn({ onClick }: { onClick: () => void }) {
   );
 }
 
+// ─── Slope info panel ─────────────────────────────────────────────
+
+function SlopeInfoPanel() {
+  const [open, setOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (open) panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, [open]);
+
+  return (
+    <div className="adv-slope-info">
+      <button
+        className="adv-slope-info__toggle"
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+        type="button"
+      >
+        <span className="adv-slope-info__icon" aria-hidden="true">i</span>
+        Hoe bereken ik mijn hellingspercentage?
+        <span className="adv-slope-info__chevron" style={{ transform: open ? 'rotate(180deg)' : undefined }}>▾</span>
+      </button>
+
+      {open && (
+        <div className="adv-slope-info__panel" ref={panelRef}>
+          <img
+            src="https://cdn.shopify.com/s/files/1/0656/0550/1091/files/AT-688821.webp?v=1773238381"
+            alt="Hellingspercentage berekenen"
+            className="adv-slope-info__img"
+          />
+          <div className="adv-slope-info__body">
+            <p className="adv-slope-info__formula">
+              helling (%) = verticale hoogte ÷ horizontale afstand × 100
+            </p>
+            <ol className="adv-slope-info__steps">
+              <li>Meet de horizontale afstand over de grondlijn (bijv. 100 cm).</li>
+              <li>Meet het hoogteverschil over diezelfde afstand (bijv. 15 cm).</li>
+              <li>Deel de verticale hoogte door de horizontale afstand.</li>
+              <li>Vermenigvuldig met 100 voor het percentage.</li>
+            </ol>
+            <div className="adv-slope-info__example">
+              <strong>Voorbeeld:</strong> 15 cm hoogte ÷ 100 cm afstand × 100 = <strong>15%</strong>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Static option data ───────────────────────────────────────────
 
 const AREA_OPTIONS: { id: AreaBucket; label: string; sub: string; icon: React.ReactNode }[] = [
-  { id: 'xs',  label: 'Klein',       sub: 'tot 500 m²',           icon: <IconGardenXS /> },
-  { id: 'sm',  label: 'Middel',      sub: '500 – 1.000 m²',       icon: <IconGardenSM /> },
-  { id: 'md',  label: 'Groot',       sub: '1.000 – 2.000 m²',     icon: <IconGardenMD /> },
-  { id: 'lg',  label: 'Heel groot',  sub: '2.000 – 5.000 m²',     icon: <IconGardenLG /> },
-  { id: 'xl',  label: 'Zeer groot',  sub: '5.000 – 7.500 m²',     icon: <IconGardenXL /> },
-  { id: 'xxl', label: 'Landgoed',    sub: '> 7.500 m²',           icon: <IconGardenXXL /> },
+  { id: 'xs',   label: 'Klein',          sub: 'tot 500 m²',              icon: <IconGardenXS /> },
+  { id: 'sm',   label: 'Middel',         sub: '500 – 1.000 m²',          icon: <IconGardenSM /> },
+  { id: 'md',   label: 'Groot',          sub: '1.000 – 2.000 m²',        icon: <IconGardenMD /> },
+  { id: 'lg',   label: 'Heel groot',     sub: '2.000 – 5.000 m²',        icon: <IconGardenLG /> },
+  { id: 'xl',   label: 'Zeer groot',     sub: '5.000 – 7.500 m²',        icon: <IconGardenXL /> },
+  { id: 'xxl',  label: 'Landgoed',       sub: '7.500 – 15.000 m²',       icon: <IconGardenXXL /> },
+  { id: 'pro',  label: 'Professioneel',  sub: '15.000 – 25.000 m²',      icon: <IconGardenPRO /> },
+  { id: 'mega', label: 'Mega',           sub: 'Sportveld > 25.000 m²',   icon: <IconGardenMEGA /> },
 ];
 
 const SLOPE_OPTIONS: { id: SlopeBucket; label: string; sub: string; icon: React.ReactNode }[] = [

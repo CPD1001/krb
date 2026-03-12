@@ -623,13 +623,15 @@ body {
 .cfg-machine-card__price {
   display: flex;
   align-items: baseline;
+  flex-wrap: wrap;
   gap: var(--cfg-space-xs);
   margin-top: var(--cfg-space-sm);
 }
 
-.cfg-machine-card__price-label {
+.cfg-machine-card__price-rrp {
   font-size: var(--cfg-font-size-xs);
   color: var(--cfg-color-text-muted);
+  text-decoration: line-through;
 }
 
 .cfg-machine-card__price-value {

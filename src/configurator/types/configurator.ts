@@ -42,6 +42,7 @@ export interface MachineOption extends ConfigOption {
   heroImage: string;
   galleryImages: string[];
   keySpecs: { label: string; value: string }[];
+  rrp?: number;  // Aanbevolen verkoopprijs (adviesprijs) — tonen doorgestreept naast verkoopprijs
 }
 
 export interface PowerSystemOption extends ConfigOption {
